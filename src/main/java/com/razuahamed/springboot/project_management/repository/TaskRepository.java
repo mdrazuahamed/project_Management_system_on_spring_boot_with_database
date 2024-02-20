@@ -13,7 +13,10 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     public Task findByName(String name);
 
-    //@Query("SELECT t FROM Task t WHERE t.id = :id")
-//    @Query("SELECT m FROM Member m WHERE m NOT IN (SELECT t.member FROM Task t)")
-//    public List<Member> findMemberWithNoTask(List<Member> member, List<Task> task);
+
+    @Query(value = "SELECT *\n" +
+            "FROM member \n" +
+            "LEFT JOIN task_members ON member.id = task_members.members_id\n" +
+            "WHERE task_members.task_id IS NULL;", nativeQuery = true)
+    public List<Member> findMemberWithNoTask(List<Member> member, List<Task> task);
 }
