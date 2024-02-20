@@ -1,10 +1,23 @@
 package com.razuahamed.springboot.project_management.model;
-import java.io.Serializable;
+import jakarta.persistence.*;
 
+import java.io.Serializable;
+@Entity
 public class Task implements Serializable {
-    private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
+    @OneToOne
     private Member member;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Task(String name) {
         this.name = name;
@@ -13,13 +26,11 @@ public class Task implements Serializable {
     public Task() {
         this.name = null;
         this.member = null;
-        this.id = 0;
     }
 
-    public Task(long id, String name, Member member) {
+    public Task(String name, Member member) {
         this.name = name;
         this.member = member;
-        this.id = id;
     }
 
     public Member getMember() {
@@ -36,14 +47,6 @@ public class Task implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     @Override

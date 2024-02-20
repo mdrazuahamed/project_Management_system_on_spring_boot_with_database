@@ -1,31 +1,37 @@
 package com.razuahamed.springboot.project_management.model;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.*;
 
+import java.io.Serializable;
+import java.util.List;
+@Entity
 public class Team implements Serializable {
-    private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
-    private List<Task> taskList;
+//    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Task> tasks;
 
     public Team() {
         this.name = "No name";
-        this.taskList = null;
-        this.id = 0;
+        this.tasks = null;
     }
 
-    public Team(long id, String name, List<Task> taskList) {
-        this.name = name;
-        this.taskList = taskList;
-        this.id = id;
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public void removeTask(Task task) {
+        tasks.remove(task);
+    }
+    public Team(String name, List<Task> tasks) {
+        this.name = name;
+        this.tasks = tasks;
     }
 
     public String getName() {
@@ -36,16 +42,16 @@ public class Team implements Serializable {
         this.name = name;
     }
 
-    public List<Task> getTaskList() {
-        return taskList;
+    public List<Task> getTasks() {
+        return tasks;
     }
 
-    public void setTaskList(List<Task> taskList) {
-        this.taskList = taskList;
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     public void addTask(Task task) {
-        this.taskList.add(task);
+        this.tasks.add(task);
     }
 
     @Override
@@ -53,7 +59,7 @@ public class Team implements Serializable {
         return "Team{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", taskList=" + taskList +
+                ", tasks=" + tasks +
                 '}';
     }
 }
