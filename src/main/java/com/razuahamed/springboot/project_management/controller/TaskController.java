@@ -35,7 +35,7 @@ public class TaskController {
 
     @GetMapping("/addTask")
     public String addTask(Model model,@RequestParam("teamId") long teamId) {
-        model.addAttribute("memberWithNoTask",taskRepository.findMemberWithNoTask(memberRepository.findAll(),taskRepository.findAll()));
+        //model.addAttribute("memberWithNoTask",taskRepository.findMemberWithNoTask(memberRepository.findAll(),taskRepository.findAll()));
         model.addAttribute("teamId", teamId);
         model.addAttribute("newTask", new Task());
         return "add-task";
