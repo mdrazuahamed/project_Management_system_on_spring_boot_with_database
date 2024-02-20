@@ -7,8 +7,11 @@ import com.razuahamed.springboot.project_management.repository.TaskRepository;
 import com.razuahamed.springboot.project_management.repository.TeamRepository;
 //import com.razuahamed.springboot.project_management.service.MemberService;
 //import com.razuahamed.springboot.project_management.service.TeamService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,11 +46,9 @@ public class TaskController {
     }
 
     @PostMapping("/addTaskOnProject")
-    public String addTaskOnProject(@RequestParam("teamId") long teamId, Task task){
+    public String addTaskOnProject(@RequestParam("teamId") long teamId, @Valid Task task, @NotNull BindingResult bindingResult){
         Team team = teamRepository.findById(teamId).orElse(null);
-        //System.out.println(team+task+member);
         taskRepository.save(task);
-        System.out.println("---------------"+task.getMember());
         team.addTask(task);
         teamRepository.save(team);
         return "add-task-success";

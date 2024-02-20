@@ -20,7 +20,7 @@
             <th>Team Name</th>
             <th>Task</th>
             <th>Member</th>
-            <th>Completed or Not</th>
+            <th>If Completed Click Yes</th>
             <th>Add Task</th>
         </tr>
         </thead>
@@ -47,7 +47,7 @@
                         <form th:action="@{/task/completeTask}" method="get">
                             <input type="hidden" name="taskId" th:value="${task.id}">
                             <input type="hidden" name="teamId" th:value="${team.id}">
-                            <button type="submit" class="btn btn-primary btn-completed">Completed</button>
+                            <button type="submit" class="btn btn-primary btn-completed">Yes</button>
                         </form>
                     </li>
                 </ul>

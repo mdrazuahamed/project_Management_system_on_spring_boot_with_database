@@ -1,5 +1,6 @@
 package com.razuahamed.springboot.project_management.model;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
 @Entity
@@ -7,6 +8,7 @@ public class Task implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Name is Require")
     private String name;
     @OneToOne
     private Member member;

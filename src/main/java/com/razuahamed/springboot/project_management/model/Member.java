@@ -11,9 +11,11 @@ public class Member implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Name is require")
     private String name;
-    @NotNull(message = "Provide your Age")
+    @NotNull(message = "Provide Your Age")
     private int age;
+    @NotBlank(message = "Provide Your Email")
     private String email;
     private String password;
 
