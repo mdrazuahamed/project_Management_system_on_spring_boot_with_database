@@ -23,20 +23,16 @@ import java.util.List;
 @Controller
 @RequestMapping("/task")
 public class TaskController {
-    //TeamService teamService;
     private TaskRepository taskRepository;
     private MemberRepository memberRepository;
-    //private MemberService memberService;
     private TeamRepository teamRepository;
 
     public TaskController(TaskRepository taskRepository, MemberRepository memberRepository, TeamRepository teamRepository) {
         this.taskRepository = taskRepository;
-        //this.memberService = memberService;
         this.memberRepository = memberRepository;
         this.teamRepository = teamRepository;
-        //this.teamService = teamService;
     }
-//
+
     @GetMapping("/addTask")
     public String addTask(Model model,@RequestParam("teamId") long teamId) {
         model.addAttribute("memberWithNoTask",taskRepository.findMemberWithNoTask(memberRepository.findAll(),taskRepository.findAll()));
@@ -56,12 +52,9 @@ public class TaskController {
 
     @GetMapping("/completeTask")
     public String completeTask(@RequestParam("taskId") Long  taskId, @RequestParam("teamId") Long teamId) {
-
         Team team = teamRepository.findByIdEquals(teamId);
         team.removeTask(taskRepository.findById(taskId).orElse(null));
         teamRepository.save(team);
-        //taskRepository.delete(taskRepository.findByName(taskName));
-
         return "remove-complete-task";
     }
 

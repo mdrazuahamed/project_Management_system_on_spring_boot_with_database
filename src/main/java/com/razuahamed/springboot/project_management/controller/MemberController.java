@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/member")
 public class MemberController {
     private MemberRepository memberRepository;
-    //private MemberService memberService;
 
     public MemberController(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
@@ -31,7 +30,6 @@ public class MemberController {
     public String addMember(@Valid Member member, @NotNull BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "redirect:/member/add";
-            //return "add-member-with-age";
         }
         else {
             this.memberRepository.save(member);

@@ -8,8 +8,4 @@ import java.util.List;
 public interface MemberRepository extends JpaRepository<Member,Long> {
 
     public Member findByName(String name);
-
-//    @Query("")
-//    public List<Member> memberListInNoTeam();
-
 }

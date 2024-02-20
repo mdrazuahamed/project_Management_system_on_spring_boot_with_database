@@ -15,18 +15,10 @@ import java.util.List;
 @RequestMapping("/team")
 public class TeamController {
     TeamRepository teamRepository;
-//    private TeamService teamService;
-//
+
     public TeamController(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
     }
-//
-//    @GetMapping("/maxMember")
-//    public String showTeamWithMaximumMember(Model model) {
-//        Team team = teamService.teamWithMaxMember();
-//        model.addAttribute("maxTeam", team);
-//        return "max-team";
-//    }
 
     @GetMapping("/allTeam")
     public String showAllTeam(Model model) {

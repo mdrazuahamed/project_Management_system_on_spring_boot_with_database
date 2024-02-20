@@ -9,7 +9,6 @@ public class Team implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-//    @OneToMany(cascade = CascadeType.ALL)
     @OneToMany(fetch = FetchType.EAGER)
     private List<Task> tasks;
 
@@ -23,12 +22,15 @@ public class Team implements Serializable {
     }
 
     public void setId(Long id) {
+
         this.id = id;
     }
 
     public void removeTask(Task task) {
+
         tasks.remove(task);
     }
+
     public Team(String name, List<Task> tasks) {
         this.name = name;
         this.tasks = tasks;
