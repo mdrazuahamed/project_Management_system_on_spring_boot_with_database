@@ -35,7 +35,7 @@ public class TaskController {
 
     @GetMapping("/addTask")
     public String addTask(Model model,@RequestParam("teamId") long teamId) {
-        //model.addAttribute("memberWithNoTask",taskRepository.findMemberWithNoTask(memberRepository.findAll(),taskRepository.findAll()));
+        model.addAttribute("findMemberWithNoTask",taskRepository.findMembersWithNoTask());
         model.addAttribute("teamId", teamId);
         model.addAttribute("newTask", new Task());
         return "add-task";
@@ -53,6 +53,10 @@ public class TaskController {
     @GetMapping("/completeTask")
     public String completeTask(@RequestParam("taskId") Long  taskId, @RequestParam("teamId") Long teamId) {
         Team team = teamRepository.findByIdEquals(teamId);
+        List<Member> needToRemovedMembers = taskRepository.findMembersWithTaskId(taskId);
+        Task task = taskRepository.findById(taskId).orElse(null);
+        task.removeMembers(needToRemovedMembers);
+        taskRepository.save(task);
         team.removeTask(taskRepository.findById(taskId).orElse(null));
         teamRepository.save(team);
         return "remove-complete-task";

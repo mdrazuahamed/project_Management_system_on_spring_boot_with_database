@@ -17,9 +17,8 @@
 
         <div class="form-group">
             <label for="memberName">Assign to:</label>
-            <select th:field="*{member}" id="memberName" class="form-control">
-                <option value="" selected disabled>Select member</option>
-                <option th:each="member : ${memberWithNoTask}" th:value="${member.id}" th:text="${member.name}"></option>
+            <select th:field="*{members}" id="memberName" class="form-control" multiple>
+                <option th:each="member : ${findMemberWithNoTask}" th:value="${member.id}" th:text="${member.name}"></option>
             </select>
         </div>
 

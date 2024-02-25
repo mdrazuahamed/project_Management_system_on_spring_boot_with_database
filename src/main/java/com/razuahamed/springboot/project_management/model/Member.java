@@ -86,6 +86,10 @@ public class Member implements Serializable {
         this.id = id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Member{" +

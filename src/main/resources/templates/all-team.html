@@ -7,6 +7,23 @@
             padding: 0.25rem 0.5rem;
             font-size: 0.875rem;
             line-height: .9;
+            margin-top: 0px; /* Increased distance */
+            margin-bottom: 30px; /* Increased distance */
+        }
+        /* Space between task rows */
+        .task {
+            margin-bottom: 30px; /* Increased distance */
+            margin-top: 0px; /* Increased distance */
+        }
+        /* Space between Yes button and task */
+        .btn-container {
+            margin-top: 0px; /* Increased distance */
+            margin-bottom: 20px; /* Increased distance */
+        }
+        /* Space between members */
+        .member-list {
+            margin-top: 0px; /* Increased distance */
+            margin-bottom: 20px; /* Increased distance */
         }
     </style>
     <meta charset="UTF-8">
@@ -19,8 +36,8 @@
         <tr>
             <th>Team Name</th>
             <th>Task</th>
-            <th>Member</th>
             <th>If Completed Click Yes</th>
+            <th>Member</th>
             <th>Add Task</th>
         </tr>
         </thead>
@@ -28,27 +45,29 @@
         <tr th:each="team : ${allTeam}">
             <td th:text="${team.name}"></td>
             <td>
-                <ul class="list-unstyled">
+                <ul class="list-unstyled ">
                     <li th:each="task : ${team.tasks}" class="d-flex justify-content-between">
-                        <span th:text="${task.name}"></span>
+                        <span class = "task" th:text="${task.name}"></span>
                     </li>
                 </ul>
             </td>
             <td>
-                <ul class="list-unstyled">
-                    <li th:each="task : ${team.tasks}" class="d-flex justify-content-between">
-                        <span th:text="${task.member.name}"></span>
-                    </li>
-                </ul>
-            </td>
-            <td>
-                <ul class="list-unstyled">
+                <ul class="list-unstyled ">
                     <li th:each="task : ${team.tasks}" class="d-flex justify-content-between">
                         <form th:action="@{/task/completeTask}" method="get">
                             <input type="hidden" name="taskId" th:value="${task.id}">
                             <input type="hidden" name="teamId" th:value="${team.id}">
                             <button type="submit" class="btn btn-primary btn-completed">Yes</button>
                         </form>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul class="list-unstyled">
+                    <li th:each="task : ${team.tasks}" class="d-flex justify-content-between">
+                        <ul class="member-list">
+                            <li th:each="member : ${task.members}" th:text="${member.name}"></li>
+                        </ul>
                     </li>
                 </ul>
             </td>

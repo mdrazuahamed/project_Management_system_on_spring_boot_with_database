@@ -62,8 +62,9 @@ public class ProjectManagementApplication {
 //
 //			System.out.println(teamRepository.findByIdEquals(1L));
 //			//System.out.println(taskRepository.findMemberWithNoTask(memberRepository.findAll(),taskRepository.findAll()));
-			List<Member> members = taskRepository.findMemberWithNoTask(memberRepository.findAll(),taskRepository.findAll());
+			List<Member> members = taskRepository.findMembersWithNoTask();
 			System.out.println(members);
+			System.out.println(taskRepository.findMembersWithTaskId(1L));
 		};
 	}
 }

@@ -12,11 +12,15 @@ public class Task implements Serializable {
     private Long id;
     @NotBlank(message = "Name is Require")
     private String name;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private List<Member> members;
 
     public Long getId() {
         return id;
+    }
+
+    public void removeMembers(List<Member> members) {
+        this.members.removeAll(members);
     }
 
     public void setId(Long id) {
