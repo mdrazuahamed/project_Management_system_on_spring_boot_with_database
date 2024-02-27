@@ -37,6 +37,7 @@
             <th>Team Name</th>
             <th>Task</th>
             <th>If Completed Click Yes</th>
+            <th>Add Free Member</th>
             <th>Member</th>
             <th>Add Task</th>
         </tr>
@@ -61,6 +62,15 @@
                         </form>
                     </li>
                 </ul>
+            </td>
+            <td>
+                <li th:each="task : ${team.tasks}" class="d-flex justify-content-between">
+                    <form th:action="@{/member/addFreeMember}" method="get">
+                        <input type="hidden" name="teamId" th:value="${team.id}">
+                        <input type="hidden" name="taskId" th:value="${team.id}">
+                        <button type="submit" class="btn btn-success btn-completed">Add Free Member</button>
+                    </form>
+                </li>
             </td>
             <td>
                 <ul class="list-unstyled">

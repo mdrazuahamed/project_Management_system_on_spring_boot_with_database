@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-5">Please Give Task Information</h2>
+    <form th:action="@{/member/addFreeMember}" method="post" th:object="${newTask}" class="mt-4">
+        <input type="hidden" name="teamId" th:value="${teamId}">
+        <input type="hidden" name="taskId" th:value="${taskId}">
+        <div class="form-group">
+            <label for="memberName">Assign to:</label>
+            <select th:field="*{members}" id="memberName" class="form-control" multiple>
+                <option th:each="member : ${findMemberWithNoTask}" th:value="${member.id}" th:text="${member.name}"></option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+</div>
+</body>
+</html>

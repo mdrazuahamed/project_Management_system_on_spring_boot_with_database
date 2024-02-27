@@ -23,6 +23,10 @@ public class Task implements Serializable {
         this.members.removeAll(members);
     }
 
+    public void addMembers(List<Member> members) {
+        this.members.addAll(members);
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
