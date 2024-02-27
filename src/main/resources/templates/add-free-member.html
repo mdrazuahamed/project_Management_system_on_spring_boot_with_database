@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="container">
-    <h2 class="mt-5">Please Give Task Information</h2>
+    <h2 class="mt-5">Please Select Member</h2>
     <form th:action="@{/member/addFreeMember}" method="post" th:object="${newTask}" class="mt-4">
         <input type="hidden" name="teamId" th:value="${teamId}">
         <input type="hidden" name="taskId" th:value="${taskId}">

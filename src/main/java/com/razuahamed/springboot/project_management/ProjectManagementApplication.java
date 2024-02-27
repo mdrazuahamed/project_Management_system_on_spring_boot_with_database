@@ -34,7 +34,7 @@ public class ProjectManagementApplication {
 //			Member rafi = new Member("Rubait Rafi", 25, "rafi@dsinnovators.com");
 //			Member rifa = new Member("Rifa Mist", 24, "rifa@dsinnovators.com");
 //			Member tulon = new Member("Tulon khan", 25, "tulon@dsinnovators.com");
-//			Member fardin = new Member("Fardin Mia", 26, "fardin@dsinnovators.com");
+//			Member fardin = new Member("Fardin Ahamed", 26, "fardin@dsinnovators.com");
 //
 //			memberRepository.save(akash);
 //			memberRepository.save(nakib);
@@ -44,8 +44,6 @@ public class ProjectManagementApplication {
 //			memberRepository.save(rafi);
 //			List<Member> memberList = List.of(rifa,tulon,fardin);
 //			memberRepository.saveAll(memberList);
-//			//System.out.println(memberRepository.findAll());
-//			//System.out.println(memberRepository.findByName("Akash Rahman"));
 //
 //			Task task1 = new Task("Fix Bug From verilog",List.of(memberRepository.findByName("Nakibur Rahman"), memberRepository.findByName("Tulon khan")));
 //			Task task2 = new Task("Fix Error From Testbench",List.of(memberRepository.findByName("Reyad Ahamed"),memberRepository.findByName("Ataus Safi")));
@@ -58,13 +56,7 @@ public class ProjectManagementApplication {
 //        	Team firmware = new Team("Firmware", List.of(taskRepository.findByName("Fix Error From Testbench"),taskRepository.findByName("Remove Lvs After Routing")));
 //			teamRepository.save(hardware);
 //			teamRepository.save(firmware);
-//			System.out.println("Working");
-//
-//			System.out.println(teamRepository.findByIdEquals(1L));
-//			//System.out.println(taskRepository.findMemberWithNoTask(memberRepository.findAll(),taskRepository.findAll()));
-			List<Member> members = taskRepository.findMembersWithNoTask();
-			System.out.println(members);
-			System.out.println(taskRepository.findMembersWithTaskId(1L));
+			System.out.println("Working");
 		};
 	}
 }

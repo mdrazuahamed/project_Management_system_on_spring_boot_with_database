@@ -12,7 +12,7 @@
         }
         /* Space between task rows */
         .task {
-            margin-bottom: 30px; /* Increased distance */
+            margin-bottom: 20px; /* Increased distance */
             margin-top: 0px; /* Increased distance */
         }
         /* Space between Yes button and task */
@@ -23,7 +23,7 @@
         /* Space between members */
         .member-list {
             margin-top: 0px; /* Increased distance */
-            margin-bottom: 20px; /* Increased distance */
+            margin-bottom: 15px; /* Increased distance */
         }
     </style>
     <meta charset="UTF-8">
@@ -35,11 +35,11 @@
         <thead>
         <tr>
             <th>Team Name</th>
-            <th>Task</th>
-            <th>If Completed Click Yes</th>
-            <th>Add Free Member</th>
-            <th>Member</th>
-            <th>Add Task</th>
+            <th>Tasks</th>
+            <th>If Task Completed Click Yes</th>
+            <th>Add Extra Member</th>
+            <th>Member/Members</th>
+            <th>Add New Task on Respective Team</th>
         </tr>
         </thead>
         <tbody>
@@ -64,13 +64,14 @@
                 </ul>
             </td>
             <td>
-                <li th:each="task : ${team.tasks}" class="d-flex justify-content-between">
-                    <form th:action="@{/member/addFreeMember}" method="get">
-                        <input type="hidden" name="teamId" th:value="${team.id}">
-                        <input type="hidden" name="taskId" th:value="${team.id}">
-                        <button type="submit" class="btn btn-success btn-completed">Add Free Member</button>
-                    </form>
-                </li>
+                <ul class="list-unstyled ">
+                    <li th:each="task : ${team.tasks}" class="d-flex justify-content-between">
+                        <form th:action="@{/member/addFreeMember}" method="get">
+                            <input type="hidden" name="taskId" th:value="${task.id}">
+                            <button type="submit" class="btn btn-primary btn-completed">Add Extra Member</button>
+                        </form>
+                    </li>
+                </ul>
             </td>
             <td>
                 <ul class="list-unstyled">
@@ -84,7 +85,7 @@
             <td>
                 <form th:action="@{/task/addTask}" method="get">
                     <input type="hidden" name="teamId" th:value="${team.id}">
-                    <button type="submit" class="btn btn-success">Add Task</button>
+                    <button type="submit" class="btn btn-success">Add New Task</button>
                 </form>
             </td>
         </tr>

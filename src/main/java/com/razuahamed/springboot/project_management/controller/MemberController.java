@@ -29,19 +29,20 @@ public class MemberController {
     }
 
     @GetMapping("/addFreeMember")
-    public String addFreeMember(Model model,@RequestParam("teamId") long teamId, @RequestParam("taskId") long taskId) {
+    public String addFreeMember(Model model, @RequestParam("taskId") long taskId) {
         model.addAttribute("findMemberWithNoTask",taskRepository.findMembersWithNoTask());
-        model.addAttribute("teamId", teamId);
         model.addAttribute("taskId", taskId);
         model.addAttribute("newTask", new Task());
         return "add-free-member";
     }
 
     @PostMapping("/addFreeMember")
-    public String addFreeMember( Task task, @RequestParam("teamId") long teamId, @RequestParam("taskId") long taskId) {
+    public String addFreeMember( Task task, @RequestParam("taskId") long taskId) {
+        System.out.println(taskId);
         Task task1 = taskRepository.findById(taskId).orElse(null);
         task1.addMembers(task.getMembers());
         taskRepository.save(task1);
+        System.out.println(task1);
         return "add-free-member-success";
     }
 
