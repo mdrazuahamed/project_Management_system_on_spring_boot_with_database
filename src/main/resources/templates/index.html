@@ -1,39 +1,45 @@
+
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-image: url('background.jpg');
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
-        }
-        .custom-button {
-            width: 200px;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <title>Footer at Bottom with Tailwind CSS</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-<div class="container text-center">
-    <div class="row">
-        <div class="col">
-            <!-- All-Team Button -->
-            <form th:action="@{/team/allTeam}" method="get">
-                <button type="submit" class="btn btn-primary btn-lg custom-button">All-Team</button>
-            </form>
+<body class="flex flex-col h-screen bg-blue-500">
+<main class="flex-grow">
+    <div class="container mx-auto py-8">
+        <div class="p-4 bg-blue-900">
+            <p class="text-red-200 text-2xl font-bold text-center uppercase">Welcome to DSI Project Management System</p>
+        </div>
+
+        <div class="bg-indigo-500">
+            <div class="text-white">Our Service</div>
+
+            <div>
+                <!-- All-Team Button -->
+                <form th:action="@{/team/allTeam}" method="get">
+                    <button class="ml-32 bg-indigo-700 text-white" type="submit">Teams Detail</button>
+                </form>
+            </div>
+            <div class="mt-11">
+                <!-- Add-Member Button -->
+                <form th:action="@{/member/add}" method="get" th:object="${member}">
+                    <button class="ml-32 bg-indigo-700 text-white" type="submit">Add New Member</button>
+                </form>
+            </div>
         </div>
     </div>
-    <div class="row mt-3">
-        <div class="col">
-            <!-- Add-Member Button -->
-            <form th:action="@{/member/add}" method="get" th:object="${member}">
-                <button type="submit" class="btn btn-primary btn-lg custom-button">Add-New-Member</button>
-            </form>
-        </div>
+</main>
+<footer class="bg-gray-200 py-4">
+    <div class="container mx-auto text-center">
+        <h1>Contact Details</h1>
+        <h2>Phone Number: +88017------</h2>
+        <h2>Email: --------------@gmail.com</h2>
+        <h2>Address: ----------------------------</h2>
     </div>
-</div>
+</footer>
 </body>
 </html>
