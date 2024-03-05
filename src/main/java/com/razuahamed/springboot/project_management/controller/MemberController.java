@@ -36,6 +36,12 @@ public class MemberController {
         return "add-free-member";
     }
 
+    @GetMapping("/allMember")
+    public String addFreeMember(Model model) {
+        model.addAttribute("allMember",memberRepository.findAll());
+        return "all-member";
+    }
+
     @PostMapping("/addFreeMember")
     public String addFreeMember( Task task, @RequestParam("taskId") long taskId) {
         System.out.println(taskId);

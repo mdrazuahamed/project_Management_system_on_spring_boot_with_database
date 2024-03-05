@@ -1,13 +1,12 @@
 package com.razuahamed.springboot.project_management.controller;
 import com.razuahamed.springboot.project_management.model.Member;
+import com.razuahamed.springboot.project_management.model.Task;
 import com.razuahamed.springboot.project_management.model.Team;
 //import com.razuahamed.springboot.project_management.service.TeamService;
 import com.razuahamed.springboot.project_management.repository.TeamRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +23,10 @@ public class TeamController {
     public String showAllTeam(Model model) {
         model.addAttribute("allTeam", teamRepository.findAll());
         return "all-team";
+    }
+    @GetMapping("/teamDetails/{teamId}")
+    public String tasksDetail(Model model, @PathVariable("teamId") Long teamId) {
+        model.addAttribute("team",teamRepository.findByIdEquals(teamId));
+        return "team-details";
     }
 }

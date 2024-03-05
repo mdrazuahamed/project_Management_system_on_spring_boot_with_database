@@ -5,6 +5,68 @@
     <title>Title</title>
 </head>
 <body>
-
+<div class="container mt-5">
+    <table class="table">
+        <thead>
+        <tr >
+            <th class="border border-gray-500" >Team Name</th>
+            <th class="border border-gray-500">Tasks</th>
+            <th class="border border-gray-500">If Task Completed Click Yes</th>
+            <th class="border border-gray-500">Add Extra Member</th>
+            <th class="border border-gray-500">Member/Members</th>
+            <th class="border border-gray-500">Add New Task on Respective Team</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="team : ${allTeam}">
+            <td th:text="${team.name}"></td>
+            <td>
+                <ul class="list-unstyled ">
+                    <li th:each="task : ${team.tasks}" class="d-flex justify-content-between">
+                        <span class = "task" th:text="${task.name}"></span>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul class="list-unstyled ">
+                    <li th:each="task : ${team.tasks}" class="d-flex justify-content-between">
+                        <form th:action="@{/task/completeTask}" method="get">
+                            <input type="hidden" name="taskId" th:value="${task.id}">
+                            <input type="hidden" name="teamId" th:value="${team.id}">
+                            <button type="submit" class="btn btn-primary btn-completed">Yes</button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul class="list-unstyled ">
+                    <li th:each="task : ${team.tasks}" class="d-flex justify-content-between">
+                        <form th:action="@{/member/addFreeMember}" method="get">
+                            <input type="hidden" name="taskId" th:value="${task.id}">
+                            <button type="submit" class="btn btn-primary btn-completed">Add Extra Member</button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul class="list-unstyled">
+                    <li th:each="task : ${team.tasks}" class="d-flex justify-content-between">
+                        <ul class="member-list">
+                            <li th:each="member : ${task.members}" th:text="${member.name}"></li>
+                        </ul>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <form th:action="@{/task/addTask}" method="get">
+                    <input type="hidden" name="teamId" th:value="${team.id}">
+                    <button type="submit" class="btn btn-success">Add New Task</button>
+                </form>
+            </td>
+        </tr>
+        <tr><td colspan="5"><br></td></tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
