@@ -11,10 +11,12 @@ public class Team implements Serializable {
     private String name;
     @OneToMany(fetch = FetchType.EAGER)
     private List<Task> tasks;
+    private String intro;
 
     public Team() {
         this.name = "No name";
         this.tasks = null;
+        this.intro = "No intro";
     }
 
     public Long getId() {
@@ -27,13 +29,13 @@ public class Team implements Serializable {
     }
 
     public void removeTask(Task task) {
-
         tasks.remove(task);
     }
 
-    public Team(String name, List<Task> tasks) {
+    public Team(String name, List<Task> tasks, String intro) {
         this.name = name;
         this.tasks = tasks;
+        this.intro = intro;
     }
 
     public String getName() {
@@ -56,12 +58,21 @@ public class Team implements Serializable {
         this.tasks.add(task);
     }
 
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
+    }
+
     @Override
     public String toString() {
         return "Team{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", tasks=" + tasks +
+                ", intro='" + intro + '\'' +
                 '}';
     }
 }

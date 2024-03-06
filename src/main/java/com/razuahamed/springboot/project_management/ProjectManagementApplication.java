@@ -49,11 +49,11 @@ public class ProjectManagementApplication {
 //			Task task2 = new Task("Fix Error From Testbench",List.of(memberRepository.findByName("Reyad Ahamed"),memberRepository.findByName("Ataus Safi")));
 //			taskRepository.save(task1);
 //			taskRepository.save(task2);
-//			Task task3 = new Task("Remove Lvs After Routing",List.of(memberRepository.findByName("Fardin Mia")));
+//			Task task3 = new Task("Remove Lvs After Routing",List.of(memberRepository.findByName("Fardin Ahamed")));
 //			taskRepository.save(task3);
 //
-//			Team hardware = new Team("Hardware",List.of(taskRepository.findByName("Fix Bug From verilog")));
-//        	Team firmware = new Team("Firmware", List.of(taskRepository.findByName("Fix Error From Testbench"),taskRepository.findByName("Remove Lvs After Routing")));
+//			Team hardware = new Team("Hardware",List.of(taskRepository.findByName("Fix Bug From verilog")),"Seamless, Secure, Scalable: Your Digital Landscape Refined. Building Tomorrow's Infrastructure Today");
+//        	Team firmware = new Team("Firmware", List.of(taskRepository.findByName("Fix Error From Testbench"),taskRepository.findByName("Remove Lvs After Routing"))," Explore our work as we bridge the gap between hardware and software, providing innovative solutions and simulations that drive technological advancements.");
 //			teamRepository.save(hardware);
 //			teamRepository.save(firmware);
 			System.out.println("Working");

@@ -25,8 +25,12 @@ public class TeamController {
         return "all-team";
     }
     @GetMapping("/teamDetails/{teamId}")
-    public String tasksDetail(Model model, @PathVariable("teamId") Long teamId) {
+    public String teamsDetail(Model model, @PathVariable("teamId") Long teamId) {
         model.addAttribute("team",teamRepository.findByIdEquals(teamId));
         return "team-details";
+    }
+    @GetMapping("/about")
+    public String aboutOrganization() {
+        return "about";
     }
 }
