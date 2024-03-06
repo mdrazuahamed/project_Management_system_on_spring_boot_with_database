@@ -30,8 +30,8 @@
           font-weight: bold;
           color: white;
           position: absolute;
-          top: 60px;
-          left: 30px;
+          top: 80px;
+          left: 50px;
         }
         .navbar {
           position: sticky;
@@ -42,6 +42,11 @@
         .add-task-button {
           z-index: 0;
         }
+
+        .fallback-color {
+        background-color: cyan; /* Fallback color */
+        }
+
     </style>
 
 </head>
@@ -67,22 +72,45 @@
     </nav>
 
     <div>
-        <a th:href="@{/task/addTask/{teamId}(teamId=${team.id})}" method="get" class=" add-task-button bg-white text-black absolute top-10 right-10 mt-12 mr-8 text-xl font-medium text-center rounded-lg hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300">
+        <a th:href="@{/task/addTask/{teamId}(teamId=${team.id})}" method="get" class=" add-task-button absolute top-10 right-10 mt-12 mr-8 text-xl font-medium text-center text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-2.5 py-2.5 text-center me-2 mb-2 fallback-color">
             Add New Task </a>
     </div>
 
     <div class="team-name" th:text="${team.name}"></div>
 
-    <div class="ml-28 mt-10 grid grid-cols-2 gap-4">
-        <div class="ml-48 mt-40 grid grid-cols-2 gap-4  justify-around items-center" th:each="task : ${team.tasks}">
-            <div  class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <p th:text="${task.name}" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"></p>
-                <div th:each="member : ${task.members}">
-                    <p th:text="${member.name}" class="mb-3 font-normal text-gray-700 dark:text-gray-400"></p>
-                </div>
+<!--    <div class="ml-28 mt-10 grid grid-cols-2 gap-4">-->
+<!--        <div class="ml-48 mt-40 grid grid-cols-2 gap-4  justify-around items-center" th:each="task : ${team.tasks}">-->
+<!--            <div  class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">-->
+<!--                <p th:text="${task.name}" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"></p>-->
+<!--                <p class="text-xl font-bold">Assign to:</p>-->
+<!--                <div th:each="member : ${task.members}">-->
+<!--                    <p th:text="${member.name}" class="font-normal text-gray-700 dark:text-gray-400"></p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <div class="ml-56 mt-40 grid grid-cols-2 gap-0"> <!-- Changed gap-1 to gap-0 -->
+        <!-- Loop through your data and generate grid items -->
+<!--        <div class="relative">-->
+        <div th:each="task : ${team.tasks}" class="relative mt-14 ml-8 relative max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+
+            <p th:text="${task.name}" class="mb-2 mt-10 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"></p>
+            <p class="text-xl font-bold">Assign to:</p>
+            <div th:each="member : ${task.members}">
+                <p th:text="${member.name}" class="font-normal text-gray-700 dark:text-gray-400"></p>
             </div>
-        <!--        </div>-->
+            <form th:action="@{/task/completeTask}" method="get">
+                <input type="hidden" name="taskId" th:value="${task.id}">
+                <input type="hidden" name="teamId" th:value="${team.id}">
+                <button type="submit" class="absolute right-0 top-0 text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 fallback-color">Completed</button>
+            </form>
+            <form th:action="@{/member/addFreeMember}" method="get">
+                <input type="hidden" name="taskId" th:value="${task.id}">
+                <button type="submit" class=" text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 fallback-color">Add Extra Member</button>
+            </form>
         </div>
+<!--        </div>-->
     </div>
 
 <!--    <div class="background-container_cards grid grid-cols-2 gap-4">-->
