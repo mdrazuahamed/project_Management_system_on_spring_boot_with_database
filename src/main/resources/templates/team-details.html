@@ -56,7 +56,7 @@
     </div>
 </nav>
 
-<a th:href="@{/task/addTask/{teamId}(teamId=${team.id})}" method="get" class=" add-task-button absolute top-10 right-10 mt-12 mr-8 text-xl font-medium text-center text-black bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-2.5 py-2.5 text-center me-2 mb-2 bg-yellow-400">
+<a th:href="@{/task/addTask/{teamId}(teamId=${team.id})}" method="get" class=" add-task-button absolute top-10 right-16 mt-16 mr-8 text-xl font-medium text-center text-black bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-2.5 py-2.5 text-center me-2 mb-2 bg-yellow-400">
     Add New Task
 </a>
 
@@ -68,8 +68,9 @@
     <div th:each="task : ${team.tasks}" class=" relative max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <p th:text="${task.name}" class="mb-2 mt-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"></p>
         <hr class="border-gray-300 my-2"> <!-- Straight line -->
-        <div class="mt-2 mb-2" th:each="member : ${task.members}">
-            <p th:text="${member.name}" class="font-normal text-gray-700 dark:text-gray-400"></p>
+        <div class="grid grid-cols-2 mt-2 mb-2" th:each="member : ${task.members}">
+            <p th:text="${member.name}" class="ml-4 font-normal text-gray-700 dark:text-gray-400"></p>
+            <img th:src="${member.imagePath}" class="mt-0 ml-7 rounded-full w-7 h-7">
         </div>
         <div class="mt-4 flex justify-center items-center space-x-4">
             <form th:action="@{/member/addFreeMember}" method="get">

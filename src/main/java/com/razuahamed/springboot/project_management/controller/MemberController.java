@@ -29,8 +29,6 @@ public class MemberController {
     private TaskRepository taskRepository;
     private static String UPLOADED_FOLDER = "src/main/resources/static/images/";
 
-    private String UPLOADED_FOLDER1 = getClass().getClassLoader().getResource("").getPath();
-
     public MemberController(MemberRepository memberRepository, TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
         this.memberRepository = memberRepository;
@@ -96,7 +94,7 @@ public class MemberController {
                     System.out.println(member);
                     // Save the member
                     memberRepository.save(member);
-                    System.out.println(UPLOADED_FOLDER1);
+
                     return "add-member-success";
                 } catch (IOException e) {
                     e.printStackTrace();
