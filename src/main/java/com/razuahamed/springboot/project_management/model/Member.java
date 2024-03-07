@@ -18,12 +18,9 @@ public class Member implements Serializable {
     @NotBlank(message = "Provide Your Email")
     private String email;
     private String password;
+    private String imagePath;
 
     public Member() {
-        this.name = null;
-        this.age = 0;
-        this.email = null;
-        this.password = null;
     }
 
     public Member(String name, int age, String email, Long id) {
@@ -32,18 +29,26 @@ public class Member implements Serializable {
         this.email = email;
         this.id = id;
     }
-    public Member(String name, int age, String email, Long id, String password) {
+    public Member(String name, int age, String email, String password, String image_path) {
         this.name = name;
         this.age = age;
         this.email = email;
-        this.id = id;
         this.password = password;
+        this.imagePath = image_path;
     }
 
     public Member(String name, int age, String email) {
         this.name = name;
         this.age = age;
         this.email = email;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public String getPassword() {
@@ -98,6 +103,7 @@ public class Member implements Serializable {
                 ", age=" + age +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", image_path='" + imagePath + '\'' +
                 '}';
     }
 }

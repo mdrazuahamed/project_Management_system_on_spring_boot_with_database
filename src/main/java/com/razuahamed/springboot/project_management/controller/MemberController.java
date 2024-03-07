@@ -64,7 +64,8 @@ public class MemberController {
             return "redirect:/member/add";
         }
         else {
-            this.memberRepository.save(member);
+            //member.setImagePath();
+            memberRepository.save(member);
             return "add-member-success";
         }
     }

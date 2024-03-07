@@ -12,11 +12,21 @@ public class Team implements Serializable {
     @OneToMany(fetch = FetchType.EAGER)
     private List<Task> tasks;
     private String intro;
+    private String imagePath;
 
     public Team() {
         this.name = "No name";
         this.tasks = null;
         this.intro = "No intro";
+        this.imagePath = null;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public Long getId() {
@@ -32,10 +42,11 @@ public class Team implements Serializable {
         tasks.remove(task);
     }
 
-    public Team(String name, List<Task> tasks, String intro) {
+    public Team(String name, List<Task> tasks, String intro, String imagePath) {
         this.name = name;
         this.tasks = tasks;
         this.intro = intro;
+        this.imagePath = imagePath;
     }
 
     public String getName() {
@@ -73,6 +84,7 @@ public class Team implements Serializable {
                 ", name='" + name + '\'' +
                 ", tasks=" + tasks +
                 ", intro='" + intro + '\'' +
+                ", imagePath='" + imagePath + '\'' +
                 '}';
     }
 }

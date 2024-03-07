@@ -1,72 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .background-container {
+          background-image: url('/images/cards_bg.jpg');
+          background-position: center center;
+          background-size: cover; /* or 'contain' depending on your preference */
+          height: 600px; /* Adjust height as needed */
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+        }
+
+        .navbar {
+          position: sticky;
+          top: 0;
+          z-index: 1000; /* Ensure the navbar stays above other elements */
+        }
+
+        .add-member-button {
+          z-index: 0;
+        }
+
+        .meet-the-innovators {
+          font-size: 4rem;
+        }
+
+    </style>
+
 </head>
-<body>
-<div class="container mt-5">
-    <table class="table">
-        <thead>
-        <tr >
-            <th class="border border-gray-500" >Team Name</th>
-            <th class="border border-gray-500">Tasks</th>
-            <th class="border border-gray-500">If Task Completed Click Yes</th>
-            <th class="border border-gray-500">Add Extra Member</th>
-            <th class="border border-gray-500">Member/Members</th>
-            <th class="border border-gray-500">Add New Task on Respective Team</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="team : ${allTeam}">
-            <td th:text="${team.name}"></td>
-            <td>
-                <ul class="list-unstyled ">
-                    <li th:each="task : ${team.tasks}" class="d-flex justify-content-between">
-                        <span class = "task" th:text="${task.name}"></span>
+<body class="background-container">
+    <nav class="navbar h-16 bg-white dark:bg-gray-900 fixed w-full top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+        <div class="max-w-screen-xl flex items-center justify-between mx-auto h-full p-4">
+            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse h-full">
+                <img th:src="@{/images/dsi_logo.jpeg}" class="h-16 ml-1">
+                <span class="self-center text-2xl font-bold whitespace-nowrap dark:text-white">DYNAMIC SOLUTION INNOVATORS</span>
+            </a>
+
+            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1 h-full" id="navbar-sticky"> <!-- Added h-full -->
+                <ul class="flex flex-col p-2 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-4 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 h-full"> <!-- Reduced padding and adjusted height -->
+                    <li>
+                        <a href="@{/../../../#}" class="block py-2 px-2 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 h-full" aria-current="page">Home</a> <!-- Adjusted padding -->
+                    </li>
+                    <li>
+                        <a th:href="@{/team/about}" method="get" class="block py-2 px-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 h-full">About</a> <!-- Adjusted padding -->
                     </li>
                 </ul>
-            </td>
-            <td>
-                <ul class="list-unstyled ">
-                    <li th:each="task : ${team.tasks}" class="d-flex justify-content-between">
-                        <form th:action="@{/task/completeTask}" method="get">
-                            <input type="hidden" name="taskId" th:value="${task.id}">
-                            <input type="hidden" name="teamId" th:value="${team.id}">
-                            <button type="submit" class="btn btn-primary btn-completed">Yes</button>
-                        </form>
-                    </li>
-                </ul>
-            </td>
-            <td>
-                <ul class="list-unstyled ">
-                    <li th:each="task : ${team.tasks}" class="d-flex justify-content-between">
-                        <form th:action="@{/member/addFreeMember}" method="get">
-                            <input type="hidden" name="taskId" th:value="${task.id}">
-                            <button type="submit" class="btn btn-primary btn-completed">Add Extra Member</button>
-                        </form>
-                    </li>
-                </ul>
-            </td>
-            <td>
-                <ul class="list-unstyled">
-                    <li th:each="task : ${team.tasks}" class="d-flex justify-content-between">
-                        <ul class="member-list">
-                            <li th:each="member : ${task.members}" th:text="${member.name}"></li>
-                        </ul>
-                    </li>
-                </ul>
-            </td>
-            <td>
-                <form th:action="@{/task/addTask}" method="get">
-                    <input type="hidden" name="teamId" th:value="${team.id}">
-                    <button type="submit" class="btn btn-success">Add New Task</button>
-                </form>
-            </td>
-        </tr>
-        <tr><td colspan="5"><br></td></tr>
-        </tbody>
-    </table>
-</div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mt-2 text-white meet-the-innovators">Meet The Innovators</div>
+
+    <div class="mt-11">
+        <!-- Add-Member Button -->
+        <form th:action="@{/member/add}" method="get" th:object="${member}">
+            <button class="add-member-button absolute top-10 right-10 mt-12 mr-8 text-xl font-medium text-center text-black bg-yellow-400 from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-2.5 py-2.5 text-center me-2 mb-2">Add New Member</button>
+        </form>
+    </div>
+
+
+    <div class="ml-20 mt-2 mb-44 grid grid-cols-3 gap-1"> <!-- Changed grid-cols-2 to grid-cols-3 and adjusted margin -->
+        <!-- Loop through your data and generate grid items -->
+        <div th:each="member : ${allMember}" class="mb-8 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div class="grid grid-cols-2">
+            <img th:src="${member.imagePath}" class="rounded-full w-32 h-32">
+            <p th:text="${member.name}" class="ml-1 mb-2 mt-12 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"></p>
+            </div>
+            <hr class="border-gray-300 my-2"> <!-- Straight line -->
+            <p th:text="'Age: ' + ${member.age}" class="font-normal text-gray-700 dark:text-gray-400"></p>
+            <p th:text="'Email: ' + ${member.email}" class="font-normal text-gray-700 dark:text-gray-400"></p>
+        </div>
+    </div>
+
 </body>
 </html>
