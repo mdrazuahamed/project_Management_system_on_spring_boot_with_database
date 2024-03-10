@@ -36,7 +36,10 @@ public class ProjectManagementApplication {
 //			Member tulon = new Member("Tulon Khan", 24, "tulon@dsinnovators.com","12345","/images/Tulon_Khan.png");
 //			Member farhat = new Member("Farhat Shahir", 28, "Farhat@dsinnovators.com","12345","/images/Farhat_Shahir.png");
 //			Member saurav = new Member("Siddique Saurav", 25, "saurav@dsinnovators.com","12345","/images/Siddique_Saurav.png");
-//
+//			Member anik = new Member("Mushraful Hoque Anik", 38, "mushraful.hoque@dsinnovators.com","12345","/images/Mushraful_Hoque_Anik.png");
+//			Member aziz = new Member("Sk Adit Aziz", 25, "adit.aziz@dsinnovators.com","12345","/images/Sk_Adit_Aziz.png");
+//			memberRepository.save(anik);
+//			memberRepository.save(aziz);
 //			List<Member> memberList = List.of(towsif,tulon,farhat);
 //			memberRepository.saveAll(memberList);
 //			memberRepository.save(saurav);

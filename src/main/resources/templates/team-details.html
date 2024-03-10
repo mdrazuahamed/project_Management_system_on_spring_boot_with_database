@@ -6,7 +6,7 @@
     <title>Title</title>
     <style>
         .background-container {
-          background-image: url('/images/team_blr.jpg');
+          background-image: url('/images/team_detail_blr.png');
           background-position: center center;
           background-size: cover; /* or 'contain' depending on your preference */
           height: 600px; /* Adjust height as needed */
@@ -63,14 +63,14 @@
 
 <div class="team-name" th:text="${team.name}"></div>
 
-<div class="ml-20 mt-24 grid grid-cols-3 gap-1"> <!-- Changed grid-cols-2 to grid-cols-3 and adjusted margin -->
+<div class="ml-20 mt-14 grid grid-cols-3 gap-1"> <!-- Changed grid-cols-2 to grid-cols-3 and adjusted margin -->
     <!-- Loop through your data and generate grid items -->
-    <div th:each="task : ${team.tasks}" class=" relative max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div th:each="task : ${team.tasks}" class=" relative max-w-sm p-6 mb-8 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <p th:text="${task.name}" class="mb-2 mt-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"></p>
         <hr class="border-gray-300 my-2"> <!-- Straight line -->
-        <div class="grid grid-cols-2 mt-2 mb-2" th:each="member : ${task.members}">
-            <p th:text="${member.name}" class="ml-4 font-normal text-gray-700 dark:text-gray-400"></p>
-            <img th:src="${member.imagePath}" class="mt-0 ml-7 rounded-full w-7 h-7">
+        <div class="grid grid-cols-2 mt-2 mb-2 ml-14" th:each="member : ${task.members}">
+            <p th:text="${member.name}" class="ml-2 font-normal text-gray-700 dark:text-gray-400"></p>
+            <img th:src="${member.imagePath}" class="mt-0 ml-9 rounded-full w-7 h-7">
         </div>
         <div class="mt-4 flex justify-center items-center space-x-4">
             <form th:action="@{/member/addFreeMember}" method="get">
