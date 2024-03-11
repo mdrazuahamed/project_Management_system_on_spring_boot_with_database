@@ -39,7 +39,7 @@ public class TaskController {
     }
 
     @PostMapping("/addTaskOnProject")
-    public String addTaskOnProject(@RequestParam("teamId") long teamId, @Valid Task task, @NotNull BindingResult bindingResult){
+    public String addTaskOnProject(@RequestParam("teamId") long teamId, @Valid Task task, @NotNull BindingResult bindingResult) {
         Team team = teamRepository.findById(teamId).orElse(null);
         taskRepository.save(task);
         team.addTask(task);

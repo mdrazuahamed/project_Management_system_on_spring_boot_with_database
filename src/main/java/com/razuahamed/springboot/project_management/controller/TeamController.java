@@ -24,11 +24,13 @@ public class TeamController {
         model.addAttribute("allTeam", teamRepository.findAll());
         return "all-team";
     }
+
     @GetMapping("/teamDetails/{teamId}")
     public String teamsDetail(Model model, @PathVariable("teamId") Long teamId) {
         model.addAttribute("team",teamRepository.findByIdEquals(teamId));
         return "team-details";
     }
+
     @GetMapping("/about")
     public String aboutOrganization() {
         return "about";

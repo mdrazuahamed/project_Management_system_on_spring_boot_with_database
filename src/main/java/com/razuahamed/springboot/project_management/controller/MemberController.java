@@ -49,32 +49,20 @@ public class MemberController {
     }
 
     @PostMapping("/addFreeMember")
-    public String addFreeMember( Task task, @RequestParam("taskId") long taskId) {
+    public String addFreeMember(Task task, @RequestParam("taskId")long taskId) {
         System.out.println(taskId);
         Task task1 = taskRepository.findById(taskId).orElse(null);
         task1.addMembers(task.getMembers());
         taskRepository.save(task1);
-        System.out.println(task1);
         return "add-free-member-success";
     }
 
     @GetMapping("/add")
     public String addMemberOnTeam(Model model) {
-        model.addAttribute("newMember", new Member());
+        model.addAttribute("newMember",new Member());
         return "add-member";
     }
 
-//    @PostMapping("/add")
-//    public String addMember(@Valid Member member, @NotNull BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            return "redirect:/member/add";
-//        }
-//        else {
-//            //member.setImagePath();
-//            memberRepository.save(member);
-//            return "add-member-success";
-//        }
-//    }
     @PostMapping("/add")
     public String addMember(@Valid Member member, @RequestParam("image") MultipartFile file, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -83,26 +71,19 @@ public class MemberController {
         else {
             if (!file.isEmpty()) {
                 try {
-                    // Get the filename and save it to the UPLOADED_FOLDER
-                    String fileName = member.getName() + ".png"; // Assuming image format is always PNG
+                    String fileName = member.getName() + ".png";
                     byte[] bytes = file.getBytes();
                     Path path = Paths.get(UPLOADED_FOLDER + fileName);
                     Files.write(path, bytes);
-
-                    // Set the imagePath attribute of the member
                     member.setImagePath("/images/" + fileName);
                     System.out.println(member);
-                    // Save the member
                     memberRepository.save(member);
-
                     return "add-member-success";
                 } catch (IOException e) {
                     e.printStackTrace();
-                    // Handle file upload error
                     return "redirect:/member/add";
                 }
             } else {
-                // Handle no file uploaded
                 return "redirect:/member/add";
             }
         }
