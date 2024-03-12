@@ -9,10 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -20,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -46,6 +44,18 @@ public class MemberController {
     public String addFreeMember(Model model) {
         model.addAttribute("allMember",memberRepository.findAll());
         return "all-member";
+    }
+
+//    @GetMapping("/membersDelete")
+//    public String memberDelete(Model model){
+//        model.addAttribute("members", memberRepository.findAll());
+//        return "delete-members";
+//    }
+
+    @GetMapping("/deleteMember")
+    public String memberDelete(@RequestParam("memberId")long memberId){
+        memberRepository.deleteById(memberId);
+        return "delete-member-success";
     }
 
     @PostMapping("/addFreeMember")

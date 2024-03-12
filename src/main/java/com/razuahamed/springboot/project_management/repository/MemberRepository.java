@@ -8,4 +8,6 @@ import java.util.List;
 public interface MemberRepository extends JpaRepository<Member,Long> {
 
     public Member findByName(String name);
+
+    public void deleteById(Member member);
 }

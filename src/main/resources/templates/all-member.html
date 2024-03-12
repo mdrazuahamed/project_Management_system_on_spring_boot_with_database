@@ -12,7 +12,7 @@
           height: 600px; /* Adjust height as needed */
           justify-content: center;
           align-items: center;
-          text-align: center;
+
         }
 
         .navbar {
@@ -66,7 +66,7 @@
 
     <div class="ml-20 mt-8 mb-44 grid grid-cols-3 gap-1"> <!-- Changed grid-cols-2 to grid-cols-3 and adjusted margin -->
         <!-- Loop through your data and generate grid items -->
-        <div th:each="member : ${allMember}" class="mb-8 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <div th:each="member : ${allMember}" class="mb-4 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <div class="grid grid-cols-2">
                 <img th:src="${member.imagePath}" class="rounded-full w-32 h-32">
                 <p th:text="${member.name}" class="ml-1 mb-2 mt-12 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"></p>
@@ -74,6 +74,11 @@
             <hr class="border-gray-300 my-2"> <!-- Straight line -->
             <p th:text="'Age: ' + ${member.age}" class="font-normal text-gray-700 dark:text-gray-400"></p>
             <p th:text="'Email: ' + ${member.email}" class="font-normal text-gray-700 dark:text-gray-400"></p>
+
+            <form th:action="@{/member/deleteMember}" method="get">
+                <input type="hidden" name="memberId" th:value="${member.id}">
+                <button class="add-member-button  top-5 right-5 font-medium text-center text-black bg-red-400  hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-2.5 py-2.5 text-center me-2 mb-2 hover:bg-gray-500">Remove</button>
+            </form>
         </div>
     </div>
 </body>
