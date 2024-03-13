@@ -40,24 +40,6 @@ public class MemberController {
         return "add-free-member";
     }
 
-    @GetMapping("/allMember")
-    public String addFreeMember(Model model) {
-        model.addAttribute("allMember",memberRepository.findAll());
-        return "all-member";
-    }
-
-//    @GetMapping("/membersDelete")
-//    public String memberDelete(Model model){
-//        model.addAttribute("members", memberRepository.findAll());
-//        return "delete-members";
-//    }
-
-    @GetMapping("/deleteMember")
-    public String memberDelete(@RequestParam("memberId")long memberId){
-        memberRepository.deleteById(memberId);
-        return "delete-member-success";
-    }
-
     @PostMapping("/addFreeMember")
     public String addFreeMember(Task task, @RequestParam("taskId")long taskId) {
         System.out.println(taskId);
@@ -65,6 +47,34 @@ public class MemberController {
         task1.addMembers(task.getMembers());
         taskRepository.save(task1);
         return "add-free-member-success";
+    }
+
+    @GetMapping("/allMember")
+    public String addFreeMember(Model model) {
+        model.addAttribute("allMember",memberRepository.findAll());
+        return "all-member";
+    }
+
+    @GetMapping("/deleteMember")
+    public String memberDelete(@RequestParam("memberId") long memberId) {
+        Member member = memberRepository.findByIdEquals(memberId);
+        List<Task> tasks = taskRepository.findAll();
+        List<Task> tasksToUpdate = new ArrayList<>();
+        List<Member> membersToRemove = new ArrayList<>();
+
+        for (Task task : tasks) {
+            for (Member newMember : task.getMembers()) {
+                if (member.equals(newMember)) {
+                    membersToRemove.add(newMember);
+                }
+            }
+            task.removeMembers(membersToRemove);
+            tasksToUpdate.add(task);
+        }
+        taskRepository.saveAll(tasksToUpdate);
+        memberRepository.deleteById(memberId);
+
+        return "redirect:/member/allMember";
     }
 
     @GetMapping("/add")
@@ -88,7 +98,7 @@ public class MemberController {
                     member.setImagePath("/images/" + fileName);
                     System.out.println(member);
                     memberRepository.save(member);
-                    return "add-member-success";
+                    return "redirect:/member/allMember";
                 } catch (IOException e) {
                     e.printStackTrace();
                     return "redirect:/member/add";
