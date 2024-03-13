@@ -72,8 +72,8 @@
                 <img th:src="${member.imagePath}" class="mt-0 ml-9 rounded-full w-7 h-7">
             </div>
             <div class="mt-4 flex justify-center items-center space-x-4">
-                <form th:action="@{/member/addFreeMember}" method="get">
-                    <input type="hidden" name="taskId" th:value="${task.id}">
+                <form th:action="@{/team/teamDetails/{teamId}/addFreeMember(teamId=${team.id})}" method="get">
+                <input type="hidden" name="taskId" th:value="${task.id}">
                     <button type="submit" class="text-black bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-1 py-1 text-center me-2 mb-2 bg-yellow-400">Add Extra Member</button>
                 </form>
                 <form th:action="@{/task/completeTask}" method="get">

@@ -43,7 +43,7 @@
     </nav>
 
     <div class="container mt-28">
-        <form th:action="@{/task/addTaskOnProject}" method="post" th:object="${newTask}" class="max-w-sm mx-auto">
+        <form th:action="@{/task/addTask}" method="post" th:object="${newTask}" class="max-w-sm mx-auto">
             <input type="hidden" name="teamId" th:value="${teamId}">
             <div class="mb-3">
                 <label for="name" class="block mb-2 text-xl font-medium text-white dark:text-white">Name:</label>

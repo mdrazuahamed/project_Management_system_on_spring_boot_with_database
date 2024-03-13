@@ -19,6 +19,7 @@ public class Member implements Serializable {
     private String email;
     private String password;
     private String imagePath;
+    private boolean active;
 
     public Member() {
     }
@@ -29,12 +30,21 @@ public class Member implements Serializable {
         this.email = email;
         this.id = id;
     }
-    public Member(String name, int age, String email, String password, String image_path) {
+    public Member(String name, int age, String email, String password, String image_path, boolean active) {
         this.name = name;
         this.age = age;
         this.email = email;
         this.password = password;
         this.imagePath = image_path;
+        this.active = active;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Member(String name, int age, String email) {
@@ -103,7 +113,8 @@ public class Member implements Serializable {
                 ", age=" + age +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", image_path='" + imagePath + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                ", active=" + active +
                 '}';
     }
 }

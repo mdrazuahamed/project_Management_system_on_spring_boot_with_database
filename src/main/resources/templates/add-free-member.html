@@ -43,7 +43,7 @@
     </nav>
 
     <div class="container mt-28">
-        <form th:action="@{/member/addFreeMember}" method="post" th:object="${newTask}" class="max-w-sm mx-auto">
+        <form th:action="@{/team/teamDetails/{teamId}/addFreeMember(teamId=${teamId})}" method="post" th:object="${newTask}" class="max-w-sm mx-auto">
             <input type="hidden" name="teamId" th:value="${teamId}">
             <input type="hidden" name="taskId" th:value="${taskId}">
             <div class="form-group mt-20">

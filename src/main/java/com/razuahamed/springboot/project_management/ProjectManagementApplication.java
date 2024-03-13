@@ -26,18 +26,18 @@ public class ProjectManagementApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(String[] args, MemberRepository memberRepository, TaskRepository taskRepository, TeamRepository teamRepository) {
 		return runner -> {
-//			Member akash = new Member("Akash Rahman", 25, "akash@dsinnovators.com","12345","/images/Akash_Rahman.png");
-//			Member nakib = new Member("Nakibur Rahman", 28, "nakib@dsinnovators.com","12345","/images/Nakibur_Rahman.png");
-//			Member reyad = new Member("Reyad Ahamed", 24, "reyad@dsinnovators.com","12345","/images/Reyad_Ahamed.png");
-//			Member foez = new Member("Foez Ahamed", 25, "foez@dsinnovators.com","12345","/images/Foez_Ahamed.png");
-//			Member safi = new Member("Ataus Safi", 30, "safi@dsinnovators.com","12345","/images/Ataus_Safi.png");
-//			Member rafi = new Member("Robiat Rafi", 23, "rafi@dsinnovators.com","12345","/images/Robiat_Rafi.png");
-//			Member towsif = new Member("Towsif Abdullah", 24, "towsif@dsinnovators.com","12345","/images/Towsif_Abdullah.png");
-//			Member tulon = new Member("Tulon Khan", 24, "tulon@dsinnovators.com","12345","/images/Tulon_Khan.png");
-//			Member farhat = new Member("Farhat Shahir", 28, "Farhat@dsinnovators.com","12345","/images/Farhat_Shahir.png");
-//			Member saurav = new Member("Siddique Saurav", 25, "saurav@dsinnovators.com","12345","/images/Siddique_Saurav.png");
-//			Member anik = new Member("Mushraful Hoque Anik", 38, "mushraful.hoque@dsinnovators.com","12345","/images/Mushraful_Hoque_Anik.png");
-//			Member aziz = new Member("Sk Adit Aziz", 25, "adit.aziz@dsinnovators.com","12345","/images/Sk_Adit_Aziz.png");
+//			Member akash = new Member("Akash Rahman", 25, "akash@dsinnovators.com","12345","/images/Akash_Rahman.png",true);
+//			Member nakib = new Member("Nakibur Rahman", 28, "nakib@dsinnovators.com","12345","/images/Nakibur_Rahman.png",true);
+//			Member reyad = new Member("Reyad Ahamed", 24, "reyad@dsinnovators.com","12345","/images/Reyad_Ahamed.png",true);
+//			Member foez = new Member("Foez Ahamed", 25, "foez@dsinnovators.com","12345","/images/Foez_Ahamed.png",true);
+//			Member safi = new Member("Ataus Safi", 30, "safi@dsinnovators.com","12345","/images/Ataus_Safi.png",true);
+//			Member rafi = new Member("Robiat Rafi", 23, "rafi@dsinnovators.com","12345","/images/Robiat_Rafi.png",true);
+//			Member towsif = new Member("Towsif Abdullah", 24, "towsif@dsinnovators.com","12345","/images/Towsif_Abdullah.png",true);
+//			Member tulon = new Member("Tulon Khan", 24, "tulon@dsinnovators.com","12345","/images/Tulon_Khan.png",true);
+//			Member farhat = new Member("Farhat Shahir", 28, "Farhat@dsinnovators.com","12345","/images/Farhat_Shahir.png",true);
+//			Member saurav = new Member("Siddique Saurav", 25, "saurav@dsinnovators.com","12345","/images/Siddique_Saurav.png",true);
+//			Member anik = new Member("Mushraful Hoque Anik", 38, "mushraful.hoque@dsinnovators.com","12345","/images/Mushraful_Hoque_Anik.png",true);
+//			Member aziz = new Member("Sk Adit Aziz", 25, "adit.aziz@dsinnovators.com","12345","/images/Sk_Adit_Aziz.png",true);
 //			// memberRepository.save(anik);
 //			memberRepository.save(aziz);
 //			memberRepository.save(saurav);

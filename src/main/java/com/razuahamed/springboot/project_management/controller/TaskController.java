@@ -38,13 +38,13 @@ public class TaskController {
         return "add-task";
     }
 
-    @PostMapping("/addTaskOnProject")
-    public String addTaskOnProject(@RequestParam("teamId") long teamId, @Valid Task task, @NotNull BindingResult bindingResult) {
+    @PostMapping("/addTask")
+    public String addTaskOnProject(Model model,@RequestParam("teamId") long teamId, @Valid Task task, @NotNull BindingResult bindingResult) {
         Team team = teamRepository.findById(teamId).orElse(null);
         taskRepository.save(task);
         team.addTask(task);
         teamRepository.save(team);
-        return "add-task-success";
+        return "redirect:/team/teamDetails/"+teamId;
     }
 
     @GetMapping("/completeTask")
@@ -56,6 +56,6 @@ public class TaskController {
         taskRepository.save(task);
         team.removeTask(taskRepository.findById(taskId).orElse(null));
         teamRepository.save(team);
-        return "remove-complete-task";
+        return "redirect:/team/teamDetails/"+teamId;
     }
 }
