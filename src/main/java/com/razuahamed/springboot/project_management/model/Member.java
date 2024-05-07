@@ -17,8 +17,10 @@ public class Member implements Serializable {
     private int age;
     @NotBlank(message = "Provide Your Email")
     private String email;
+    @NotBlank(message = "Name is require")
     private String password;
     private String imagePath;
+    @NotNull(message = "Provide this member is active or not")
     private boolean active;
 
     public Member() {
