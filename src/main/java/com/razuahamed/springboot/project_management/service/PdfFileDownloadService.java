@@ -1,6 +1,8 @@
 package com.razuahamed.springboot.project_management.service;
+
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -19,18 +21,28 @@ public class PdfFileDownloadService {
                 return;
             }
 
-            FileOutputStream outputStream = new FileOutputStream("C:\\Downloads\\output.pdf");
+            // Read PDF content into a byte array
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             byte[] byteArray = new byte[1024];
             int readLength;
 
             InputStream inputStream = pdfUrl.openStream();
             while ((readLength = inputStream.read(byteArray)) > 0) {
-                outputStream.write(byteArray, 0, readLength);
+                byteArrayOutputStream.write(byteArray, 0, readLength);
             }
 
-            outputStream.flush();
-            outputStream.close();
+            // Convert byte array to PDF
+            byte[] pdfContent = byteArrayOutputStream.toByteArray();
+
+            // Close streams
             inputStream.close();
+            byteArrayOutputStream.close();
+
+            // Save PDF content to a file
+            FileOutputStream outputStream = new FileOutputStream("C:\\Downloads\\output.pdf");
+            outputStream.write(pdfContent);
+            outputStream.close();
+
             System.out.println("PDF downloaded successfully.");
         } catch (FileNotFoundException e) {
             System.out.println("File not found: " + e.getMessage());
