@@ -10,6 +10,7 @@ import com.razuahamed.springboot.project_management.repository.MemberRepository;
 //import com.razuahamed.springboot.project_management.service.TeamService;
 import com.razuahamed.springboot.project_management.repository.TaskRepository;
 import com.razuahamed.springboot.project_management.repository.TeamRepository;
+import com.razuahamed.springboot.project_management.service.MemberService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,42 +27,42 @@ public class ProjectManagementApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(String[] args, MemberRepository memberRepository, TaskRepository taskRepository, TeamRepository teamRepository) {
 		return runner -> {
-//			Member akash = new Member("Akash Rahman", 20, "akash@dsinnovators.com");
-//			Member nakib = new Member("Nakibur Rahman", 25, "nakib@dsinnovators.com");
-//			Member reyad = new Member("Reyad Ahamed", 30, "reyad@dsinnovators.com");
-//			Member foez = new Member("Foez Ahamed", 40, "foez@dsinnovators.com");
-//			Member safi = new Member("Ataus Safi", 50, "safi@dsinnovators.com");
-//			Member rafi = new Member("Rubait Rafi", 25, "rafi@dsinnovators.com");
-//			Member rifa = new Member("Rifa Mist", 24, "rifa@dsinnovators.com");
-//			Member tulon = new Member("Tulon khan", 25, "tulon@dsinnovators.com");
-//			Member fardin = new Member("Fardin Mia", 26, "fardin@dsinnovators.com");
-//
-//			memberRepository.save(akash);
-//			memberRepository.save(nakib);
+//			Member akash = new Member("Akash Rahman", 25, "akash@dsinnovators.com","12345","/images/Akash_Rahman.png",true);
+//			Member nakib = new Member("Nakibur Rahman", 28, "nakib@dsinnovators.com","12345","/images/Nakibur_Rahman.png",true);
+//			Member reyad = new Member("Reyad Ahamed", 24, "reyad@dsinnovators.com","12345","/images/Reyad_Ahamed.png",true);
+//			Member foez = new Member("Foez Ahamed", 25, "foez@dsinnovators.com","12345","/images/Foez_Ahamed.png",true);
+//			Member safi = new Member("Ataus Safi", 30, "safi@dsinnovators.com","12345","/images/Ataus_Safi.png",true);
+//			Member rafi = new Member("Robiat Rafi", 23, "rafi@dsinnovators.com","12345","/images/Robiat_Rafi.png",true);
+//			Member towsif = new Member("Towsif Abdullah", 24, "towsif@dsinnovators.com","12345","/images/Towsif_Abdullah.png",true);
+//			Member tulon = new Member("Tulon Khan", 24, "tulon@dsinnovators.com","12345","/images/Tulon_Khan.png",true);
+//			Member farhat = new Member("Farhat Shahir", 28, "Farhat@dsinnovators.com","12345","/images/Farhat_Shahir.png",true);
+//			Member saurav = new Member("Siddique Saurav", 25, "saurav@dsinnovators.com","12345","/images/Siddique_Saurav.png",true);
+//			Member anik = new Member("Mushraful Hoque Anik", 38, "mushraful.hoque@dsinnovators.com","12345","/images/Mushraful_Hoque_Anik.png",true);
+//			Member aziz = new Member("Sk Adit Aziz", 25, "adit.aziz@dsinnovators.com","12345","/images/Sk_Adit_Aziz.png",true);
+//			// memberRepository.save(anik);
+//			memberRepository.save(aziz);
+//			memberRepository.save(saurav);
+//			List<Member> memberList = List.of(towsif,tulon,farhat);
+//			memberRepository.saveAll(memberList);
 //			memberRepository.save(reyad);
 //			memberRepository.save(foez);
 //			memberRepository.save(safi);
 //			memberRepository.save(rafi);
-//			List<Member> memberList = List.of(rifa,tulon,fardin);
-//			memberRepository.saveAll(memberList);
-//			//System.out.println(memberRepository.findAll());
-//			//System.out.println(memberRepository.findByName("Akash Rahman"));
-//
-//			Task task1 = new Task("Fix Bug From verilog",memberRepository.findByName("Nakibur Rahman"));
-//			Task task2 = new Task("Fix Error From Testbench",memberRepository.findByName("Reyad Ahamed"));
+// 			memberRepository.save(akash);
+//			memberRepository.save(nakib);
+//			Task task1 = new Task("Remove unwanted latch",List.of(memberRepository.findByName("Nakibur Rahman"), memberRepository.findByName("Foez Ahamed")));
+//			Task task2 = new Task("Remove Lvs After Routing",List.of(memberRepository.findByName("Reyad Ahamed"),memberRepository.findByName("Ataus Safi")));
 //			taskRepository.save(task1);
 //			taskRepository.save(task2);
-//			Task task3 = new Task("Remove Lvs After Routing",memberRepository.findByName("Tulon khan"));
+//			Task task3 = new Task("Design Reference Model for ICACHE",List.of(memberRepository.findByName("Farhat Shahir")));
 //			taskRepository.save(task3);
 //
-//			Team hardware = new Team("Hardware",List.of(taskRepository.findByName("Fix Bug From verilog")));
-//        	Team firmware = new Team("Firmware", List.of(taskRepository.findByName("Fix Error From Testbench"),taskRepository.findByName("Remove Lvs After Routing")));
+//			Team hardware = new Team("Hardware",List.of(taskRepository.findByName("Remove unwanted latch"),taskRepository.findByName("Remove Lvs After Routing")),"Seamless, Secure, Scalable: Your Digital Landscape Refined. Building Tomorrow's Infrastructure Today","/images/hardware2.png");
+//        	Team firmware = new Team("Firmware", List.of(taskRepository.findByName("Design Reference Model for ICACHE"))," Explore our work as we bridge the gap between hardware and software, providing innovative solutions and simulations that drive technological advancements.","/images/software2.png");
 //			teamRepository.save(hardware);
 //			teamRepository.save(firmware);
-//			System.out.println("Working");
-//
-//			System.out.println(teamRepository.findByIdEquals(1L));
-//			System.out.println(taskRepository.findMemberWithNoTask(memberRepository.findAll(),taskRepository.findAll()));
+			System.out.println("Working");
+
 		};
 	}
 }

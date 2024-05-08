@@ -3,6 +3,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
+import java.util.List;
+
 @Entity
 public class Task implements Serializable {
     @Id
@@ -10,11 +12,19 @@ public class Task implements Serializable {
     private Long id;
     @NotBlank(message = "Name is Require")
     private String name;
-    @OneToOne
-    private Member member;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    private List<Member> members;
 
     public Long getId() {
         return id;
+    }
+
+    public void removeMembers(List<Member> members) {
+        this.members.removeAll(members);
+    }
+
+    public void addMembers(List<Member> members) {
+        this.members.addAll(members);
     }
 
     public void setId(Long id) {
@@ -27,20 +37,20 @@ public class Task implements Serializable {
 
     public Task() {
         this.name = null;
-        this.member = null;
+        this.members = null;
     }
 
-    public Task(String name, Member member) {
+    public Task(String name, List<Member> members) {
         this.name = name;
-        this.member = member;
+        this.members = members;
     }
 
-    public Member getMember() {
-        return member;
+    public List<Member> getMembers() {
+        return members;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
+    public void setMembers(List<Member> members) {
+        this.members = members;
     }
 
     public String getName() {
@@ -56,7 +66,7 @@ public class Task implements Serializable {
         return "Task{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", member=" + member +
+                ", members=" + members +
                 '}';
     }
 }

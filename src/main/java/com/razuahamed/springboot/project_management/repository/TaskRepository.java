@@ -9,12 +9,15 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
     public Task findByName(String name);
 
-    @Query("SELECT m FROM Member m WHERE m NOT IN (SELECT t.member FROM Task t)")
-    public List<Member> findMemberWithNoTask(List<Member> member, List<Task> task);
+    @Query("SELECT m FROM Member m WHERE m NOT IN (SELECT t.members FROM Task t)")
+    public List<Member> findMembersWithNoTask();
+
+    @Query("SELECT t.members FROM Task t WHERE t.id = :taskId")
+    public List<Member> findMembersWithTaskId(Long taskId);
+
 }
-
-

@@ -17,13 +17,13 @@ public class Member implements Serializable {
     private int age;
     @NotBlank(message = "Provide Your Email")
     private String email;
+    @NotBlank(message = "Name is require")
     private String password;
+    private String imagePath;
+    @NotNull(message = "Provide this member is active or not")
+    private boolean active;
 
     public Member() {
-        this.name = null;
-        this.age = 0;
-        this.email = null;
-        this.password = null;
     }
 
     public Member(String name, int age, String email, Long id) {
@@ -32,18 +32,35 @@ public class Member implements Serializable {
         this.email = email;
         this.id = id;
     }
-    public Member(String name, int age, String email, Long id, String password) {
+    public Member(String name, int age, String email, String password, String image_path, boolean active) {
         this.name = name;
         this.age = age;
         this.email = email;
-        this.id = id;
         this.password = password;
+        this.imagePath = image_path;
+        this.active = active;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Member(String name, int age, String email) {
         this.name = name;
         this.age = age;
         this.email = email;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public String getPassword() {
@@ -86,6 +103,10 @@ public class Member implements Serializable {
         this.id = id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Member{" +
@@ -94,6 +115,8 @@ public class Member implements Serializable {
                 ", age=" + age +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                ", active=" + active +
                 '}';
     }
 }

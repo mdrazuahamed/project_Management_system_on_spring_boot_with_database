@@ -12,10 +12,7 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,29 +30,32 @@ public class TaskController {
         this.teamRepository = teamRepository;
     }
 
-    @GetMapping("/addTask")
-    public String addTask(Model model,@RequestParam("teamId") long teamId) {
-        model.addAttribute("memberWithNoTask",taskRepository.findMemberWithNoTask(memberRepository.findAll(),taskRepository.findAll()));
+    @GetMapping("/addTask/{teamId}")
+    public String addTask(@PathVariable("teamId") long teamId, Model model) {
+        model.addAttribute("findMemberWithNoTask",taskRepository.findMembersWithNoTask());
         model.addAttribute("teamId", teamId);
         model.addAttribute("newTask", new Task());
         return "add-task";
     }
 
-    @PostMapping("/addTaskOnProject")
-    public String addTaskOnProject(@RequestParam("teamId") long teamId, @Valid Task task, @NotNull BindingResult bindingResult){
+    @PostMapping("/addTask")
+    public String addTaskOnProject(Model model,@RequestParam("teamId") long teamId, @Valid Task task, @NotNull BindingResult bindingResult) {
         Team team = teamRepository.findById(teamId).orElse(null);
         taskRepository.save(task);
         team.addTask(task);
         teamRepository.save(team);
-        return "add-task-success";
+        return "redirect:/team/teamDetails/"+teamId;
     }
 
     @GetMapping("/completeTask")
     public String completeTask(@RequestParam("taskId") Long  taskId, @RequestParam("teamId") Long teamId) {
         Team team = teamRepository.findByIdEquals(teamId);
+        List<Member> needToRemovedMembers = taskRepository.findMembersWithTaskId(taskId);
+        Task task = taskRepository.findById(taskId).orElse(null);
+        task.removeMembers(needToRemovedMembers);
+        taskRepository.save(task);
         team.removeTask(taskRepository.findById(taskId).orElse(null));
         teamRepository.save(team);
-        return "remove-complete-task";
+        return "redirect:/team/teamDetails/"+teamId;
     }
-
 }
