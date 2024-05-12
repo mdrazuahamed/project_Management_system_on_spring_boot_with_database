@@ -16,7 +16,8 @@ public class PdfFileDownloadService {
         try {
             URL pdfUrl = new URL(url);
             URLConnection urlConnection = pdfUrl.openConnection();
-            if (!urlConnection.getContentType().equalsIgnoreCase("application/pdf")) {
+            System.out.println(urlConnection.getContentType());
+            if (!urlConnection.getContentType().equalsIgnoreCase("application/pdf; charset=utf-8")) {
                 System.out.println("URL does not point to a PDF file.");
                 return;
             }
