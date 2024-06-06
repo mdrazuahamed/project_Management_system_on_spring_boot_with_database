@@ -1,7 +1,9 @@
 package com.razuahamed.springboot.project_management.service;
 
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.net.MalformedURLException;
@@ -17,7 +19,7 @@ public class PdfFileDownloadService {
             URL pdfUrl = new URL(url);
             URLConnection urlConnection = pdfUrl.openConnection();
             System.out.println(urlConnection.getContentType());
-            if (!urlConnection.getContentType().equalsIgnoreCase("application/pdf; charset=utf-8")) {
+            if (!urlConnection.getContentType().equalsIgnoreCase("application/pdf")) {
                 System.out.println("URL does not point to a PDF file.");
                 return;
             }
@@ -32,16 +34,21 @@ public class PdfFileDownloadService {
                 byteArrayOutputStream.write(byteArray, 0, readLength);
             }
 
-            // Convert byte array to PDF
-            byte[] pdfContent = byteArrayOutputStream.toByteArray();
+            // Convert byte array to MultipartFile
+            MultipartFile multipartFile = new MockMultipartFile(
+                    "file",
+                    "output.pdf",
+                    "application/pdf",
+                    byteArrayOutputStream.toByteArray()
+            );
 
             // Close streams
             inputStream.close();
             byteArrayOutputStream.close();
 
-            // Save PDF content to a file
+            // Save MultipartFile content to a file
             FileOutputStream outputStream = new FileOutputStream("C:\\Downloads\\output.pdf");
-            outputStream.write(pdfContent);
+            outputStream.write(multipartFile.getBytes());
             outputStream.close();
 
             System.out.println("PDF downloaded successfully.");
