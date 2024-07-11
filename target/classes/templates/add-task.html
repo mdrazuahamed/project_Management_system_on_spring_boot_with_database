@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -43,7 +44,7 @@
     </nav>
 
     <div class="container mt-28">
-        <form th:action="@{/task/addTask}" method="post" th:object="${newTask}" class="max-w-sm mx-auto">
+        <form  th:object="${newTask}" id="taskId" class="max-w-sm mx-auto">
             <input type="hidden" name="teamId" th:value="${teamId}">
             <div class="mb-3">
                 <label for="name" class="block mb-2 text-xl font-medium text-white dark:text-white">Name:</label>
@@ -62,8 +63,99 @@
                 <!-- End of checkbox column -->
             </div>
 
-            <button type="submit" class="mt-5 ext-white bg-yellow-500 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+            <button type="submit" onclick="addTaskPost()" class="mt-5 ext-white bg-yellow-500 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
         </form>
     </div>
+    <script th:inline="javascript">
+        function addTaskPost() {
+            console.log("Value testing.............");
+
+            // let teamId = document.getElementById("teamId").value; // get by id
+            // let name = document.getElementById("name").value;
+            // let memberId = document.getElementById("memberId").value;
+            // let memberName = document.getElementById("memberName").value;
+            let teamId = [[${teamId}]]; // get by variable
+            let task = [[${newTask}]];
+
+            console.log(teamId);
+            console.log(task);
+
+            // // let markazCode = ("markazCode" in window) ? document.getElementById("markazCode").value : null;
+            // // let madrasahCode = ("madrasahCode" in window) ? document.getElementById("madrasahCode").value : null;
+            // // let markazStatus = ("markaz-status-id" in window) ? $('#markaz-status-id').val() : null;
+            // // let seatPlanNotGenerated = ("seat-plan-not-generated" in window) ? document.getElementById("seat-plan-not-generated").value : null;
+            // // let ilhak = ("ilhak" in window) ? document.getElementById("ilhak").value : null;
+            // // let applicantType = ("applicant-type-id" in window) ? document.getElementById("applicant-type-id").value : null;
+            // // let formFillupStatus = ("form-fillup-status-id" in window) ? document.getElementById("form-fillup-status-id").value : null;
+            // // let referenceNumber = ("reference-number" in window) ? document.getElementById("reference-number").value : null;
+            // // let studentName = ("student-name" in window) ? document.getElementById("student-name").value : null;
+            // // let identityNumber = ("identity-number" in window) ? document.getElementById("identity-number").value : null;
+            // // let registrationNumber = ("registration-number" in window) ? document.getElementById("registration-number").value : null;
+            // // let roll = ("roll" in window) ? document.getElementById("roll").value : null;
+            // // let examGrade = ("exam-grade-id" in window) ? document.getElementById("exam-grade-id").value : null;
+            // // let negranType = ("negran-type-id" in window) ? document.getElementById("negran-type-id").value : null;
+            // // let negranStatus = ("negran-status-id" in window) ? document.getElementById("negran-status-id").value : null;
+            // // let phone = ("phone" in window) ? document.getElementById("phone").value : null;
+            // // let negranCode = ("negran-code" in window) ? document.getElementById("negran-code").value : null;
+            // // let negranName = ("negran-name" in window) ? document.getElementById("negran-name").value : null;
+            // // let assessmentCentre = ("assessment-centre-id" in window) ? document.getElementById("assessment-centre-id").value : null;
+            // // let mumtahinStatus = ("mumtahin-status-id" in window) ? document.getElementById("mumtahin-status-id").value : null;
+            // // let mumtahinName = ("mumtahin-name" in window) ? document.getElementById("mumtahin-name").value : null;
+            // // let mumtahinCode = ("mumtahin-code" in window) ? document.getElementById("mumtahin-code").value : null;
+            // // let mumtahinGroupCode = ("mumtahin-group-code" in window) ? document.getElementById("mumtahin-group-code").value : null;
+            // // let isMeritScrutinyDone = ("is-merit-scrutiny-done-id" in window) ? document.getElementById("is-merit-scrutiny-done-id").value : null;
+            // // let showDroppedOutAfterMeritScrutiny = ("showDroppedOutAfterMeritScrutiny" in window) ? document.getElementById("showDroppedOutAfterMeritScrutiny").value : null;
+            // // let madrasahAdminName = ("madrasah-admin-name" in window) ? document.getElementById("madrasah-admin-name").value : null;
+            // // let registrationStatus = ("registration-status-id" in window) ? document.getElementById("registration-status-id").value : null;
+            // //
+            let addTaskDto = {
+                "teamId": teamId,
+                "name":task
+            };
+            // //     "gender": gender,
+            // //     "markazCode": markazCode,
+            // //     "madrasahCode": madrasahCode,
+            // //     "markazStatus": markazStatus,
+            // //     "seatPlanNotGenerated": seatPlanNotGenerated,
+            // //     "ilhak": ilhak,
+            // //     "applicantType": applicantType,
+            // //     "formFillupStatus": formFillupStatus,
+            // //     "referenceNumber": referenceNumber,
+            // //     "studentName": studentName,
+            // //     "identityNumber": identityNumber,
+            // //     "registrationNumber": registrationNumber,
+            // //     "roll": roll,
+            // //     "examGrade": examGrade,
+            // //     "negranType": negranType,
+            // //     "negranStatus": negranStatus,
+            // //     "phone": phone,
+            // //     "negranCode": negranCode,
+            // //     "negranName": negranName,
+            // //     "assessmentCentre": assessmentCentre,
+            // //     "mumtahinStatus": mumtahinStatus,
+            // //     "mumtahinName": mumtahinName,
+            // //     "mumtahinCode": mumtahinCode,
+            // //     "mumtahinGroupCode": mumtahinGroupCode,
+            // //     "isMeritScrutinyDone": isMeritScrutinyDone,
+            // //     "showDroppedOutAfterMeritScrutiny": showDroppedOutAfterMeritScrutiny,
+            // //     "madrasahAdminName": madrasahAdminName,
+            // //     "registrationStatus": registrationStatus
+            // // };
+            //
+            $.ajax({
+                type: 'POST',
+                url: '/task/addTask',
+                data: JSON.stringify(addTaskDto),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function(response) {
+                    console.log('Success:', response);
+                },
+                error: function(error) {
+                    console.log('Error:', error);
+                }
+            });
+        }
+    </script>
 </body>
 </html>

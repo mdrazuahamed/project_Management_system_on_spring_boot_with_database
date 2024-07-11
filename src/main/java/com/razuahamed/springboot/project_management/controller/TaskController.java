@@ -1,4 +1,5 @@
 package com.razuahamed.springboot.project_management.controller;
+import com.razuahamed.springboot.project_management.helper.AddTaskDto;
 import com.razuahamed.springboot.project_management.model.Member;
 import com.razuahamed.springboot.project_management.model.Task;
 import com.razuahamed.springboot.project_management.model.Team;
@@ -39,12 +40,13 @@ public class TaskController {
     }
 
     @PostMapping("/addTask")
-    public String addTaskOnProject(Model model,@RequestParam("teamId") long teamId, @Valid Task task, @NotNull BindingResult bindingResult) {
-        Team team = teamRepository.findById(teamId).orElse(null);
-        taskRepository.save(task);
-        team.addTask(task);
+    public String addTaskOnProject(@RequestBody AddTaskDto addTaskDto) {
+        System.out.println("add task working");
+        Team team = teamRepository.findById(addTaskDto.teamId).orElse(null);
+        taskRepository.save(addTaskDto.task);
+        team.addTask(addTaskDto.task);
         teamRepository.save(team);
-        return "redirect:/team/teamDetails/"+teamId;
+        return "redirect:/team/teamDetails/"+addTaskDto.teamId;
     }
 
     @GetMapping("/completeTask")
