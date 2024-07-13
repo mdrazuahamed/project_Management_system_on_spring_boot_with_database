@@ -42,10 +42,11 @@ public class TaskController {
     @PostMapping("/addTask")
     public String addTaskOnProject(@RequestBody AddTaskDto addTaskDto) {
         System.out.println("add task working");
+        System.out.println(addTaskDto.membersId);
         Team team = teamRepository.findById(addTaskDto.teamId).orElse(null);
-        taskRepository.save(addTaskDto.task);
-        team.addTask(addTaskDto.task);
-        teamRepository.save(team);
+//        taskRepository.save(addTaskDto.task);
+//        team.addTask(addTaskDto.task);
+//        teamRepository.save(team);
         return "redirect:/team/teamDetails/"+addTaskDto.teamId;
     }
 

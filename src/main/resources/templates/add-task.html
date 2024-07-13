@@ -56,8 +56,7 @@
                 <!-- Start of checkbox column -->
                 <div class="flex flex-col space-y-2">
                     <label th:each="member : ${findMemberWithNoTask}" class="flex items-center space-x-2">
-                        <input type="checkbox" th:value="${member.id}" th:field="*{members}" class="ml-8 form-checkbox h-5 w-5 text-white" />
-                        <span th:text="${member.name}" class=" text-white dark:text-white"></span>
+                        <input type="checkbox" th:value="${member.id}" th:field="*{members}" id="member-${member.id}" class="ml-8 form-checkbox h-5 w-5 text-white" /> <span th:text="${member.name}" class=" text-white dark:text-white"></span>
                     </label>
                 </div>
                 <!-- End of checkbox column -->
@@ -69,16 +68,15 @@
     <script th:inline="javascript">
         function addTaskPost() {
             console.log("Value testing.............");
-
-            // let teamId = document.getElementById("teamId").value; // get by id
-            // let name = document.getElementById("name").value;
-            // let memberId = document.getElementById("memberId").value;
-            // let memberName = document.getElementById("memberName").value;
             let teamId = [[${teamId}]]; // get by variable
-            let task = [[${newTask}]];
+            typeof(teamId);
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            var checkedValues = [];
+            checkboxes.forEach(function(checkbox) {
+                checkedValues.push(checkbox.value);
+            });
 
-            console.log(teamId);
-            console.log(task);
+            console.log(checkedValues);
 
             // // let markazCode = ("markazCode" in window) ? document.getElementById("markazCode").value : null;
             // // let madrasahCode = ("madrasahCode" in window) ? document.getElementById("madrasahCode").value : null;
@@ -110,36 +108,13 @@
             // //
             let addTaskDto = {
                 "teamId": teamId,
-                "name":task
+                "name":name,
+                "members": checkedValues
             };
+            console.log(addTaskDto);
             // //     "gender": gender,
             // //     "markazCode": markazCode,
             // //     "madrasahCode": madrasahCode,
-            // //     "markazStatus": markazStatus,
-            // //     "seatPlanNotGenerated": seatPlanNotGenerated,
-            // //     "ilhak": ilhak,
-            // //     "applicantType": applicantType,
-            // //     "formFillupStatus": formFillupStatus,
-            // //     "referenceNumber": referenceNumber,
-            // //     "studentName": studentName,
-            // //     "identityNumber": identityNumber,
-            // //     "registrationNumber": registrationNumber,
-            // //     "roll": roll,
-            // //     "examGrade": examGrade,
-            // //     "negranType": negranType,
-            // //     "negranStatus": negranStatus,
-            // //     "phone": phone,
-            // //     "negranCode": negranCode,
-            // //     "negranName": negranName,
-            // //     "assessmentCentre": assessmentCentre,
-            // //     "mumtahinStatus": mumtahinStatus,
-            // //     "mumtahinName": mumtahinName,
-            // //     "mumtahinCode": mumtahinCode,
-            // //     "mumtahinGroupCode": mumtahinGroupCode,
-            // //     "isMeritScrutinyDone": isMeritScrutinyDone,
-            // //     "showDroppedOutAfterMeritScrutiny": showDroppedOutAfterMeritScrutiny,
-            // //     "madrasahAdminName": madrasahAdminName,
-            // //     "registrationStatus": registrationStatus
             // // };
             //
             $.ajax({
@@ -152,7 +127,7 @@
                     console.log('Success:', response);
                 },
                 error: function(error) {
-                    console.log('Error:', error);
+                    console.log('Error:-----', error);
                 }
             });
         }
