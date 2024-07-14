@@ -68,55 +68,24 @@
     <script th:inline="javascript">
         function addTaskPost() {
             console.log("Value testing.............");
-            let teamId = [[${teamId}]]; // get by variable
-            typeof(teamId);
+            let teamId = [[${teamId}]];
+            let name = document.getElementById("name").value
             var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            var checkedValues = [];
+            var membersId = [];
             checkboxes.forEach(function(checkbox) {
-                checkedValues.push(checkbox.value);
+                membersId.push(+checkbox.value);
             });
-
-            console.log(checkedValues);
 
             // // let markazCode = ("markazCode" in window) ? document.getElementById("markazCode").value : null;
             // // let madrasahCode = ("madrasahCode" in window) ? document.getElementById("madrasahCode").value : null;
             // // let markazStatus = ("markaz-status-id" in window) ? $('#markaz-status-id').val() : null;
-            // // let seatPlanNotGenerated = ("seat-plan-not-generated" in window) ? document.getElementById("seat-plan-not-generated").value : null;
-            // // let ilhak = ("ilhak" in window) ? document.getElementById("ilhak").value : null;
-            // // let applicantType = ("applicant-type-id" in window) ? document.getElementById("applicant-type-id").value : null;
-            // // let formFillupStatus = ("form-fillup-status-id" in window) ? document.getElementById("form-fillup-status-id").value : null;
-            // // let referenceNumber = ("reference-number" in window) ? document.getElementById("reference-number").value : null;
-            // // let studentName = ("student-name" in window) ? document.getElementById("student-name").value : null;
-            // // let identityNumber = ("identity-number" in window) ? document.getElementById("identity-number").value : null;
-            // // let registrationNumber = ("registration-number" in window) ? document.getElementById("registration-number").value : null;
-            // // let roll = ("roll" in window) ? document.getElementById("roll").value : null;
-            // // let examGrade = ("exam-grade-id" in window) ? document.getElementById("exam-grade-id").value : null;
-            // // let negranType = ("negran-type-id" in window) ? document.getElementById("negran-type-id").value : null;
-            // // let negranStatus = ("negran-status-id" in window) ? document.getElementById("negran-status-id").value : null;
-            // // let phone = ("phone" in window) ? document.getElementById("phone").value : null;
-            // // let negranCode = ("negran-code" in window) ? document.getElementById("negran-code").value : null;
-            // // let negranName = ("negran-name" in window) ? document.getElementById("negran-name").value : null;
-            // // let assessmentCentre = ("assessment-centre-id" in window) ? document.getElementById("assessment-centre-id").value : null;
-            // // let mumtahinStatus = ("mumtahin-status-id" in window) ? document.getElementById("mumtahin-status-id").value : null;
-            // // let mumtahinName = ("mumtahin-name" in window) ? document.getElementById("mumtahin-name").value : null;
-            // // let mumtahinCode = ("mumtahin-code" in window) ? document.getElementById("mumtahin-code").value : null;
-            // // let mumtahinGroupCode = ("mumtahin-group-code" in window) ? document.getElementById("mumtahin-group-code").value : null;
-            // // let isMeritScrutinyDone = ("is-merit-scrutiny-done-id" in window) ? document.getElementById("is-merit-scrutiny-done-id").value : null;
-            // // let showDroppedOutAfterMeritScrutiny = ("showDroppedOutAfterMeritScrutiny" in window) ? document.getElementById("showDroppedOutAfterMeritScrutiny").value : null;
-            // // let madrasahAdminName = ("madrasah-admin-name" in window) ? document.getElementById("madrasah-admin-name").value : null;
-            // // let registrationStatus = ("registration-status-id" in window) ? document.getElementById("registration-status-id").value : null;
-            // //
+
             let addTaskDto = {
                 "teamId": teamId,
                 "name":name,
-                "members": checkedValues
+                "membersId": membersId
             };
             console.log(addTaskDto);
-            // //     "gender": gender,
-            // //     "markazCode": markazCode,
-            // //     "madrasahCode": madrasahCode,
-            // // };
-            //
             $.ajax({
                 type: 'POST',
                 url: '/task/addTask',
@@ -125,9 +94,11 @@
                 contentType: "application/json; charset=utf-8",
                 success: function(response) {
                     console.log('Success:', response);
+                    alert(response.message);
                 },
                 error: function(error) {
-                    console.log('Error:-----', error);
+                    console.log('Error:', error);
+                    alert(error.message);
                 }
             });
         }

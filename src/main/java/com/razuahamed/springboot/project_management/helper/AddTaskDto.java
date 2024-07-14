@@ -6,7 +6,7 @@ import com.razuahamed.springboot.project_management.model.Task;
 import java.util.List;
 
 public class AddTaskDto {
-    public long teamId;
+    public Integer teamId;
     public String name;
-    public List<Integer> membersId;
+    public int[] membersId;
 }

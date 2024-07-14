@@ -10,13 +10,17 @@ import com.razuahamed.springboot.project_management.repository.TeamRepository;
 //import com.razuahamed.springboot.project_management.service.TeamService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/task")
@@ -40,14 +44,30 @@ public class TaskController {
     }
 
     @PostMapping("/addTask")
-    public String addTaskOnProject(@RequestBody AddTaskDto addTaskDto) {
+    public ResponseEntity<Map<String, String>> addTaskOnProject(@RequestBody AddTaskDto addTaskDto) {
         System.out.println("add task working");
-        System.out.println(addTaskDto.membersId);
-        Team team = teamRepository.findById(addTaskDto.teamId).orElse(null);
-//        taskRepository.save(addTaskDto.task);
-//        team.addTask(addTaskDto.task);
-//        teamRepository.save(team);
-        return "redirect:/team/teamDetails/"+addTaskDto.teamId;
+        List<Member> members = new ArrayList<>();
+        if (addTaskDto.membersId != null) {
+            for (int memberId : addTaskDto.membersId) {
+                members.add(memberRepository.findByIdEquals(memberId));
+            }
+        } else {
+            System.out.println("No members selected");
+        }
+        Task task = new Task(addTaskDto.name, members);
+        Team team = teamRepository.findById(Long.valueOf(addTaskDto.teamId)).orElse(null);
+        if (team != null) {
+            taskRepository.save(task);
+            team.addTask(task);
+            teamRepository.save(team);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Task added successfully");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Team not found");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/completeTask")
