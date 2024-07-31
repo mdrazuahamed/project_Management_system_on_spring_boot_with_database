@@ -8,8 +8,12 @@ import com.razuahamed.springboot.project_management.repository.TaskRepository;
 import com.razuahamed.springboot.project_management.repository.TeamRepository;
 //import com.razuahamed.springboot.project_management.service.MemberService;
 //import com.razuahamed.springboot.project_management.service.TeamService;
+import com.razuahamed.springboot.project_management.service.ExcelService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +21,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,11 +35,13 @@ public class TaskController {
     private TaskRepository taskRepository;
     private MemberRepository memberRepository;
     private TeamRepository teamRepository;
+    private ExcelService excelService;
 
-    public TaskController(TaskRepository taskRepository, MemberRepository memberRepository, TeamRepository teamRepository) {
+    public TaskController(TaskRepository taskRepository, MemberRepository memberRepository, TeamRepository teamRepository, ExcelService excelService) {
         this.taskRepository = taskRepository;
         this.memberRepository = memberRepository;
         this.teamRepository = teamRepository;
+        this.excelService = excelService;
     }
 
     @GetMapping("/addTask/{teamId}")
@@ -44,7 +53,7 @@ public class TaskController {
     }
 
     @PostMapping("/addTask")
-    public ResponseEntity<Map<String, String>> addTaskOnProject(@RequestBody AddTaskDto addTaskDto) {
+    public ResponseEntity<Map<String, String>> addTaskOnProject(@RequestBody AddTaskDto addTaskDto) throws IOException {
         System.out.println("add task working");
         List<Member> members = new ArrayList<>();
         if (addTaskDto.membersId != null) {
@@ -56,6 +65,11 @@ public class TaskController {
         }
         Task task = new Task(addTaskDto.name, members);
         Team team = teamRepository.findById(Long.valueOf(addTaskDto.teamId)).orElse(null);
+        XSSFWorkbook workbook = excelService.generateDummyExcel();
+
+//        FileOutputStream outputStream = new FileOutputStream("C:\\Downloads\\hssf.xlsx");
+//        workbook.write(outputStream);
+
         if (team != null) {
             taskRepository.save(task);
             team.addTask(task);
