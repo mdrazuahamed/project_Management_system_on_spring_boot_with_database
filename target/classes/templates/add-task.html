@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -56,105 +58,101 @@
                 <!-- Start of checkbox column -->
                 <div class="flex flex-col space-y-2">
                     <label th:each="member : ${findMemberWithNoTask}" class="flex items-center space-x-2">
-                        <input type="checkbox" th:value="${member.id}" th:field="*{members}" class="ml-8 form-checkbox h-5 w-5 text-white" />
-                        <span th:text="${member.name}" class=" text-white dark:text-white"></span>
+                        <input type="checkbox" th:value="${member.id}" th:field="*{members}" id="member-${member.id}" class="ml-8 form-checkbox h-5 w-5 text-white" /> <span th:text="${member.name}" class=" text-white dark:text-white"></span>
                     </label>
                 </div>
                 <!-- End of checkbox column -->
             </div>
 
-            <button type="submit" onclick="addTaskPost()" class="mt-5 ext-white bg-yellow-500 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+            <button type="button" onclick="addTaskPost()" class="mt-5 ext-white bg-yellow-500 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
         </form>
     </div>
+
     <script th:inline="javascript">
         function addTaskPost() {
-            console.log("Value testing.............");
-
-            // let teamId = document.getElementById("teamId").value; // get by id
-            // let name = document.getElementById("name").value;
-            // let memberId = document.getElementById("memberId").value;
-            // let memberName = document.getElementById("memberName").value;
-            let teamId = [[${teamId}]]; // get by variable
-            let task = [[${newTask}]];
-
-            console.log(teamId);
-            console.log(task);
+            // console.log("Value testing.............");
+            let teamId = [[${teamId}]];
+            let name = document.getElementById("name").value
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            var membersId = [];
+            checkboxes.forEach(function(checkbox) {
+                membersId.push(+checkbox.value);
+            });
 
             // // let markazCode = ("markazCode" in window) ? document.getElementById("markazCode").value : null;
             // // let madrasahCode = ("madrasahCode" in window) ? document.getElementById("madrasahCode").value : null;
             // // let markazStatus = ("markaz-status-id" in window) ? $('#markaz-status-id').val() : null;
-            // // let seatPlanNotGenerated = ("seat-plan-not-generated" in window) ? document.getElementById("seat-plan-not-generated").value : null;
-            // // let ilhak = ("ilhak" in window) ? document.getElementById("ilhak").value : null;
-            // // let applicantType = ("applicant-type-id" in window) ? document.getElementById("applicant-type-id").value : null;
-            // // let formFillupStatus = ("form-fillup-status-id" in window) ? document.getElementById("form-fillup-status-id").value : null;
-            // // let referenceNumber = ("reference-number" in window) ? document.getElementById("reference-number").value : null;
-            // // let studentName = ("student-name" in window) ? document.getElementById("student-name").value : null;
-            // // let identityNumber = ("identity-number" in window) ? document.getElementById("identity-number").value : null;
-            // // let registrationNumber = ("registration-number" in window) ? document.getElementById("registration-number").value : null;
-            // // let roll = ("roll" in window) ? document.getElementById("roll").value : null;
-            // // let examGrade = ("exam-grade-id" in window) ? document.getElementById("exam-grade-id").value : null;
-            // // let negranType = ("negran-type-id" in window) ? document.getElementById("negran-type-id").value : null;
-            // // let negranStatus = ("negran-status-id" in window) ? document.getElementById("negran-status-id").value : null;
-            // // let phone = ("phone" in window) ? document.getElementById("phone").value : null;
-            // // let negranCode = ("negran-code" in window) ? document.getElementById("negran-code").value : null;
-            // // let negranName = ("negran-name" in window) ? document.getElementById("negran-name").value : null;
-            // // let assessmentCentre = ("assessment-centre-id" in window) ? document.getElementById("assessment-centre-id").value : null;
-            // // let mumtahinStatus = ("mumtahin-status-id" in window) ? document.getElementById("mumtahin-status-id").value : null;
-            // // let mumtahinName = ("mumtahin-name" in window) ? document.getElementById("mumtahin-name").value : null;
-            // // let mumtahinCode = ("mumtahin-code" in window) ? document.getElementById("mumtahin-code").value : null;
-            // // let mumtahinGroupCode = ("mumtahin-group-code" in window) ? document.getElementById("mumtahin-group-code").value : null;
-            // // let isMeritScrutinyDone = ("is-merit-scrutiny-done-id" in window) ? document.getElementById("is-merit-scrutiny-done-id").value : null;
-            // // let showDroppedOutAfterMeritScrutiny = ("showDroppedOutAfterMeritScrutiny" in window) ? document.getElementById("showDroppedOutAfterMeritScrutiny").value : null;
-            // // let madrasahAdminName = ("madrasah-admin-name" in window) ? document.getElementById("madrasah-admin-name").value : null;
-            // // let registrationStatus = ("registration-status-id" in window) ? document.getElementById("registration-status-id").value : null;
-            // //
+
             let addTaskDto = {
                 "teamId": teamId,
-                "name":task
+                "name":name,
+                "membersId": membersId
             };
-            // //     "gender": gender,
-            // //     "markazCode": markazCode,
-            // //     "madrasahCode": madrasahCode,
-            // //     "markazStatus": markazStatus,
-            // //     "seatPlanNotGenerated": seatPlanNotGenerated,
-            // //     "ilhak": ilhak,
-            // //     "applicantType": applicantType,
-            // //     "formFillupStatus": formFillupStatus,
-            // //     "referenceNumber": referenceNumber,
-            // //     "studentName": studentName,
-            // //     "identityNumber": identityNumber,
-            // //     "registrationNumber": registrationNumber,
-            // //     "roll": roll,
-            // //     "examGrade": examGrade,
-            // //     "negranType": negranType,
-            // //     "negranStatus": negranStatus,
-            // //     "phone": phone,
-            // //     "negranCode": negranCode,
-            // //     "negranName": negranName,
-            // //     "assessmentCentre": assessmentCentre,
-            // //     "mumtahinStatus": mumtahinStatus,
-            // //     "mumtahinName": mumtahinName,
-            // //     "mumtahinCode": mumtahinCode,
-            // //     "mumtahinGroupCode": mumtahinGroupCode,
-            // //     "isMeritScrutinyDone": isMeritScrutinyDone,
-            // //     "showDroppedOutAfterMeritScrutiny": showDroppedOutAfterMeritScrutiny,
-            // //     "madrasahAdminName": madrasahAdminName,
-            // //     "registrationStatus": registrationStatus
-            // // };
+            console.log(addTaskDto);
+            // $.ajax({
+            //     type: 'POST',
+            //     url: '/task/addTask',
+            //     data: JSON.stringify(addTaskDto),
+            //     dataType: "blob",
+            //     contentType: "application/json; charset=utf-8",
+            //     xhrFields: {
+            //         responseType: 'blob'
+            //     },
+            //     success: function(data, status, xhr) {
+            //         var contentType = 'application/vnd.ms-excel';
             //
-            $.ajax({
-                type: 'POST',
-                url: '/task/addTask',
-                data: JSON.stringify(addTaskDto),
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                success: function(response) {
-                    console.log('Success:', response);
-                },
-                error: function(error) {
-                    console.log('Error:', error);
+            //         var filename = "";
+            //         var disposition = xhr.getResponseHeader('Content-Disposition');
+            //         if (disposition && disposition.indexOf('attachment') !== -1) {
+            //             var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+            //             var matches = filenameRegex.exec(disposition);
+            //             if (matches != null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+            //         }
+            //         console.log("FILENAME: " + filename);
+            //
+            //         try {
+            //             var blob = new Blob([data], { type: contentType });
+            //
+            //             var downloadUrl = URL.createObjectURL(blob);
+            //             var a = document.createElement("a");
+            //             a.href = downloadUrl;
+            //             a.download = filename;
+            //             document.body.appendChild(a);
+            //             a.click();
+            //
+            //         } catch (exc) {
+            //             console.log("Save Blob method failed with the following exception.");
+            //             console.log(exc);
+            //         }
+            //         },
+            //     error: function() {
+            //         //TODO username already taken
+            //         console.log("Failed to download the file");
+            //     }
+            // });
+
+            var req = new XMLHttpRequest();
+            req.open('POST', "/task/addTask", true);
+            req.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+            req.responseType = 'blob';
+            req.onload = function() {
+                if (req.status === 200) {
+                    // Convert the Byte Data to BLOB object.
+                    var blob = new Blob([req.response], { type: "application/octet-stream" });
+                    console.log(blob);
+                    //saveAs(blob, 'My_File.xlsx');
+                    var a = document.createElement("a");
+                    a.href = URL.createObjectURL(blob);
+                    a.download = 'My_File.xlsx';
+                    a.click();
+                } else {
+                    console.error("Failed to download the file. Status: " + req.status);
                 }
-            });
+            };
+            req.onerror = function() {
+                console.error("Request failed.");
+            };
+            req.send(JSON.stringify(addTaskDto));
         }
     </script>
 </body>

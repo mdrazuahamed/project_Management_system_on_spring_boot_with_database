@@ -9,6 +9,7 @@ import com.razuahamed.springboot.project_management.repository.TeamRepository;
 //import com.razuahamed.springboot.project_management.service.MemberService;
 //import com.razuahamed.springboot.project_management.service.TeamService;
 import com.razuahamed.springboot.project_management.service.ExcelService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.apache.poi.ss.usermodel.Row;
@@ -53,8 +54,7 @@ public class TaskController {
     }
 
     @PostMapping("/addTask")
-    public ResponseEntity<Map<String, String>> addTaskOnProject(@RequestBody AddTaskDto addTaskDto) throws IOException {
-        System.out.println("add task working");
+    public void addTaskOnProject(@RequestBody AddTaskDto addTaskDto, HttpServletResponse response) throws IOException {
         List<Member> members = new ArrayList<>();
         if (addTaskDto.membersId != null) {
             for (int memberId : addTaskDto.membersId) {
@@ -67,22 +67,24 @@ public class TaskController {
         Team team = teamRepository.findById(Long.valueOf(addTaskDto.teamId)).orElse(null);
         XSSFWorkbook workbook = excelService.generateDummyExcel();
 
-//        FileOutputStream outputStream = new FileOutputStream("C:\\Downloads\\hssf.xlsx");
-//        workbook.write(outputStream);
-
         if (team != null) {
             taskRepository.save(task);
             team.addTask(task);
             teamRepository.save(team);
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "Task added successfully");
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + "Test" + ".xlsx\"");
+            workbook.write(response.getOutputStream());
+            workbook.close(); // Ensure the workbook is properly closed
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
+            System.out.println("workbook work");
         } else {
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "Team not found");
-            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            System.out.println("Team is null and not sending excel");
         }
     }
+
+//        FileOutputStream outputStream = new FileOutputStream("C:\\Downloads\\hssf.xlsx");
+//        workbook.write(outputStream);
 
     @GetMapping("/completeTask")
     public String completeTask(@RequestParam("taskId") Long  taskId, @RequestParam("teamId") Long teamId) {
