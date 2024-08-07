@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -62,12 +63,13 @@
                 <!-- End of checkbox column -->
             </div>
 
-            <button type="submit" onclick="addTaskPost()" class="mt-5 ext-white bg-yellow-500 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+            <button type="button" onclick="addTaskPost()" class="mt-5 ext-white bg-yellow-500 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
         </form>
     </div>
+
     <script th:inline="javascript">
         function addTaskPost() {
-            console.log("Value testing.............");
+            // console.log("Value testing.............");
             let teamId = [[${teamId}]];
             let name = document.getElementById("name").value
             var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
@@ -86,21 +88,66 @@
                 "membersId": membersId
             };
             console.log(addTaskDto);
-            $.ajax({
-                type: 'POST',
-                url: '/task/addTask',
-                data: JSON.stringify(addTaskDto),
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                success: function(response) {
-                    console.log('Success:', response);
-                    alert(response.message);
-                },
-                error: function(error) {
-                    console.log('Error:', error);
-                    alert(error.message);
+            // $.ajax({
+            //     type: 'POST',
+            //     url: '/task/addTask',
+            //     data: JSON.stringify(addTaskDto),
+            //     // dataType: "blob", // type of data come from controller
+            //     contentType: "application/json; charset=utf-8", // type of data send to controller
+            //     xhrFields: {
+            //         responseType: 'arraybuffer'
+            //     },
+            //     success: function(xhr, status, data) {
+            //         var contentType = 'application/vnd.ms-excel';
+            //         console.log("inside success")
+            //         console.log(data)
+            //         var filename = "test.xlsx";
+            //         try {
+            //             var blob = new Blob([data], { type: contentType });
+            //             console.log(blob);
+            //
+            //             var downloadUrl = URL.createObjectURL(blob);
+            //             var a = document.createElement("a");
+            //             a.href = downloadUrl;
+            //             a.download = filename;
+            //             document.body.appendChild(a);
+            //             a.click();
+            //
+            //         } catch (exc) {
+            //             console.log("Save Blob method failed with the following exception.");
+            //             console.log(exc);
+            //         }
+            //         },
+            //     error: function(xhr, status, error) {
+            //         console.log("Failed to download the file");
+            //         console.log("XHR: ", xhr);
+            //         console.log("Status: ", status);
+            //         console.log("Error: ", error);
+            //     }
+            // });
+
+            var req = new XMLHttpRequest();
+            req.open('POST', "/task/addTask", true);
+            req.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+            req.responseType = 'blob';
+            req.onload = function() {
+                if (req.status === 200) {
+                    // Convert the Byte Data to BLOB object.
+                    var blob = new Blob([req.response], { type: "application/octet-stream" });
+                    console.log(blob);
+                    //saveAs(blob, 'My_File.xlsx');
+                    var a = document.createElement("a");
+                    a.href = URL.createObjectURL(blob);
+                    a.download = 'My_File.xlsx';
+                    a.click();
+                } else {
+                    console.error("Failed to download the file. Status: " + req.status);
                 }
-            });
+            };
+            req.onerror = function() {
+                console.error("Request failed.");
+            };
+            req.send(JSON.stringify(addTaskDto));
         }
     </script>
 </body>
