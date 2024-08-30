@@ -65,7 +65,7 @@ public class TaskController {
         }
         Task task = new Task(addTaskDto.name, members);
         Team team = teamRepository.findById(Long.valueOf(addTaskDto.teamId)).orElse(null);
-        XSSFWorkbook workbook = excelService.generateDummyExcel();
+        XSSFWorkbook workbook = excelService.generateDummyExcel(members);
 
         if (team != null) {
             taskRepository.save(task);

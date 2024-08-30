@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <meta charset="UTF-8">
@@ -93,25 +92,19 @@
             //     type: 'POST',
             //     url: '/task/addTask',
             //     data: JSON.stringify(addTaskDto),
-            //     dataType: "blob",
-            //     contentType: "application/json; charset=utf-8",
+            //     // dataType: "blob", // type of data come from controller
+            //     contentType: "application/json; charset=utf-8", // type of data send to controller
             //     xhrFields: {
-            //         responseType: 'blob'
+            //         responseType: 'arraybuffer'
             //     },
-            //     success: function(data, status, xhr) {
+            //     success: function(xhr, status, data) {
             //         var contentType = 'application/vnd.ms-excel';
-            //
-            //         var filename = "";
-            //         var disposition = xhr.getResponseHeader('Content-Disposition');
-            //         if (disposition && disposition.indexOf('attachment') !== -1) {
-            //             var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-            //             var matches = filenameRegex.exec(disposition);
-            //             if (matches != null && matches[1]) filename = matches[1].replace(/['"]/g, '');
-            //         }
-            //         console.log("FILENAME: " + filename);
-            //
+            //         console.log("inside success")
+            //         console.log(data)
+            //         var filename = "test.xlsx";
             //         try {
             //             var blob = new Blob([data], { type: contentType });
+            //             console.log(blob);
             //
             //             var downloadUrl = URL.createObjectURL(blob);
             //             var a = document.createElement("a");
@@ -125,9 +118,11 @@
             //             console.log(exc);
             //         }
             //         },
-            //     error: function() {
-            //         //TODO username already taken
+            //     error: function(xhr, status, error) {
             //         console.log("Failed to download the file");
+            //         console.log("XHR: ", xhr);
+            //         console.log("Status: ", status);
+            //         console.log("Error: ", error);
             //     }
             // });
 
