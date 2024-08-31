@@ -32,12 +32,12 @@ public class Member implements Serializable {
         this.email = email;
         this.id = id;
     }
-    public Member(String name, int age, String email, String password, String image_path, boolean active) {
+    public Member(String name, int age, String email, String password, String imagePath, boolean active) {
         this.name = name;
         this.age = age;
         this.email = email;
         this.password = password;
-        this.imagePath = image_path;
+        this.imagePath = imagePath;
         this.active = active;
     }
 
